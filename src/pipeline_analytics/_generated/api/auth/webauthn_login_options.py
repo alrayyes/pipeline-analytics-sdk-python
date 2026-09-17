@@ -1,35 +1,50 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, cast
+from urllib.parse import quote
 
 import httpx
 
-from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...types import Response, UNSET
+from ... import errors
+
 from ...models.error import Error
 from ...models.web_authn_request_options import WebAuthnRequestOptions
-from ...types import Response
+from typing import cast
 
 
-def _get_kwargs() -> dict[str, Any]:
+
+def _get_kwargs(
+    
+) -> dict[str, Any]:
+    
+
+    
+
+    
 
     _kwargs: dict[str, Any] = {
         "method": "post",
         "url": "/api/auth/login/options",
     }
 
+
     return _kwargs
 
 
-def _parse_response(
-    *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Error | WebAuthnRequestOptions | None:
+
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | WebAuthnRequestOptions | None:
     if response.status_code == 200:
         response_200 = WebAuthnRequestOptions.from_dict(response.json())
+
+
 
         return response_200
 
     if response.status_code == 404:
         response_404 = Error.from_dict(response.json())
+
+
 
         return response_404
 
@@ -39,9 +54,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[Error | WebAuthnRequestOptions]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | WebAuthnRequestOptions]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -53,8 +66,9 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient | Client,
+
 ) -> Response[Error | WebAuthnRequestOptions]:
-    """Begin WebAuthn login
+    """ Begin WebAuthn login
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -62,9 +76,12 @@ def sync_detailed(
 
     Returns:
         Response[Error | WebAuthnRequestOptions]
-    """
+     """
 
-    kwargs = _get_kwargs()
+
+    kwargs = _get_kwargs(
+        
+    )
 
     response = client.get_httpx_client().request(
         **kwargs,
@@ -72,12 +89,12 @@ def sync_detailed(
 
     return _build_response(client=client, response=response)
 
-
 def sync(
     *,
     client: AuthenticatedClient | Client,
+
 ) -> Error | WebAuthnRequestOptions | None:
-    """Begin WebAuthn login
+    """ Begin WebAuthn login
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -85,18 +102,20 @@ def sync(
 
     Returns:
         Error | WebAuthnRequestOptions
-    """
+     """
+
 
     return sync_detailed(
         client=client,
-    ).parsed
 
+    ).parsed
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient | Client,
+
 ) -> Response[Error | WebAuthnRequestOptions]:
-    """Begin WebAuthn login
+    """ Begin WebAuthn login
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -104,20 +123,25 @@ async def asyncio_detailed(
 
     Returns:
         Response[Error | WebAuthnRequestOptions]
-    """
+     """
 
-    kwargs = _get_kwargs()
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    kwargs = _get_kwargs(
+        
+    )
+
+    response = await client.get_async_httpx_client().request(
+        **kwargs
+    )
 
     return _build_response(client=client, response=response)
-
 
 async def asyncio(
     *,
     client: AuthenticatedClient | Client,
+
 ) -> Error | WebAuthnRequestOptions | None:
-    """Begin WebAuthn login
+    """ Begin WebAuthn login
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -125,10 +149,10 @@ async def asyncio(
 
     Returns:
         Error | WebAuthnRequestOptions
-    """
+     """
 
-    return (
-        await asyncio_detailed(
-            client=client,
-        )
-    ).parsed
+
+    return (await asyncio_detailed(
+        client=client,
+
+    )).parsed

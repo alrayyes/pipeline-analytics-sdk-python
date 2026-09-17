@@ -1,31 +1,39 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import Any, TypeVar, BinaryIO, TextIO, TYPE_CHECKING, Generator
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+
+from ..types import UNSET, Unset
 
 from ..models.forge import Forge
 from ..models.ingestion_status import IngestionStatus
 from ..types import UNSET, Unset
 
+
+
+
+
+
 T = TypeVar("T", bound="Repo")
+
 
 
 @_attrs_define
 class Repo:
-    """
-    Attributes:
-        id (str):
-        forge (Forge):
-        identifier (str): owner/name on the forge.
-        token_masked (str): The stored token's display form, e.g. "****1234" (forge-ingestion/spec.md's "Credential
-            storage" -- never the full value).
-        ingestion_status (IngestionStatus):
-        forgejo_instance_url (str | Unset): Set only when forge is forgejo.
-        ingestion_status_reason (str | Unset): Set when ingestionStatus is degraded.
-    """
+    """ 
+        Attributes:
+            id (str):
+            forge (Forge):
+            identifier (str): owner/name on the forge.
+            token_masked (str): The stored token's display form, e.g. "****1234" (forge-ingestion/spec.md's "Credential
+                storage" -- never the full value).
+            ingestion_status (IngestionStatus):
+            forgejo_instance_url (str | Unset): Set only when forge is forgejo.
+            ingestion_status_reason (str | Unset): Set when ingestionStatus is degraded.
+     """
 
     id: str
     forge: Forge
@@ -35,6 +43,10 @@ class Repo:
     forgejo_instance_url: str | Unset = UNSET
     ingestion_status_reason: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+
+
+
+
 
     def to_dict(self) -> dict[str, Any]:
         id = self.id
@@ -51,23 +63,24 @@ class Repo:
 
         ingestion_status_reason = self.ingestion_status_reason
 
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "id": id,
-                "forge": forge,
-                "identifier": identifier,
-                "tokenMasked": token_masked,
-                "ingestionStatus": ingestion_status,
-            }
-        )
+        field_dict.update({
+            "id": id,
+            "forge": forge,
+            "identifier": identifier,
+            "tokenMasked": token_masked,
+            "ingestionStatus": ingestion_status,
+        })
         if forgejo_instance_url is not UNSET:
             field_dict["forgejoInstanceUrl"] = forgejo_instance_url
         if ingestion_status_reason is not UNSET:
             field_dict["ingestionStatusReason"] = ingestion_status_reason
 
         return field_dict
+
+
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
@@ -76,11 +89,17 @@ class Repo:
 
         forge = Forge(d.pop("forge"))
 
+
+
+
         identifier = d.pop("identifier")
 
         token_masked = d.pop("tokenMasked")
 
         ingestion_status = IngestionStatus(d.pop("ingestionStatus"))
+
+
+
 
         forgejo_instance_url = d.pop("forgejoInstanceUrl", UNSET)
 
@@ -95,6 +114,7 @@ class Repo:
             forgejo_instance_url=forgejo_instance_url,
             ingestion_status_reason=ingestion_status_reason,
         )
+
 
         repo.additional_properties = d
         return repo

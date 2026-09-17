@@ -4,24 +4,33 @@ from urllib.parse import quote
 
 import httpx
 
-from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...types import Response, UNSET
+from ... import errors
+
 from ...models.error import Error
-from ...types import Response
+from typing import cast
+
 
 
 def _get_kwargs(
     repo_id: str,
+
 ) -> dict[str, Any]:
+    
+
+    
+
+    
 
     _kwargs: dict[str, Any] = {
         "method": "delete",
-        "url": "/api/repos/{repo_id}".format(
-            repo_id=quote(str(repo_id), safe=""),
-        ),
+        "url": "/api/repos/{repo_id}".format(repo_id=quote(str(repo_id), safe=""),),
     }
 
+
     return _kwargs
+
 
 
 def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Any | Error | None:
@@ -32,10 +41,14 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
+
+
         return response_401
 
     if response.status_code == 404:
         response_404 = Error.from_dict(response.json())
+
+
 
         return response_404
 
@@ -58,8 +71,9 @@ def sync_detailed(
     repo_id: str,
     *,
     client: AuthenticatedClient | Client,
+
 ) -> Response[Any | Error]:
-    """Stop tracking a repository
+    """ Stop tracking a repository
 
      Removes the repo and cascades to its stored runs, jobs, and steps. Does not attempt to delete the
     webhook created on the forge at registration time.
@@ -73,10 +87,12 @@ def sync_detailed(
 
     Returns:
         Response[Any | Error]
-    """
+     """
+
 
     kwargs = _get_kwargs(
         repo_id=repo_id,
+
     )
 
     response = client.get_httpx_client().request(
@@ -85,13 +101,13 @@ def sync_detailed(
 
     return _build_response(client=client, response=response)
 
-
 def sync(
     repo_id: str,
     *,
     client: AuthenticatedClient | Client,
+
 ) -> Any | Error | None:
-    """Stop tracking a repository
+    """ Stop tracking a repository
 
      Removes the repo and cascades to its stored runs, jobs, and steps. Does not attempt to delete the
     webhook created on the forge at registration time.
@@ -105,20 +121,22 @@ def sync(
 
     Returns:
         Any | Error
-    """
+     """
+
 
     return sync_detailed(
         repo_id=repo_id,
-        client=client,
-    ).parsed
+client=client,
 
+    ).parsed
 
 async def asyncio_detailed(
     repo_id: str,
     *,
     client: AuthenticatedClient | Client,
+
 ) -> Response[Any | Error]:
-    """Stop tracking a repository
+    """ Stop tracking a repository
 
      Removes the repo and cascades to its stored runs, jobs, and steps. Does not attempt to delete the
     webhook created on the forge at registration time.
@@ -132,23 +150,27 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any | Error]
-    """
+     """
+
 
     kwargs = _get_kwargs(
         repo_id=repo_id,
+
     )
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(
+        **kwargs
+    )
 
     return _build_response(client=client, response=response)
-
 
 async def asyncio(
     repo_id: str,
     *,
     client: AuthenticatedClient | Client,
+
 ) -> Any | Error | None:
-    """Stop tracking a repository
+    """ Stop tracking a repository
 
      Removes the repo and cascades to its stored runs, jobs, and steps. Does not attempt to delete the
     webhook created on the forge at registration time.
@@ -162,11 +184,11 @@ async def asyncio(
 
     Returns:
         Any | Error
-    """
+     """
 
-    return (
-        await asyncio_detailed(
-            repo_id=repo_id,
-            client=client,
-        )
-    ).parsed
+
+    return (await asyncio_detailed(
+        repo_id=repo_id,
+client=client,
+
+    )).parsed
