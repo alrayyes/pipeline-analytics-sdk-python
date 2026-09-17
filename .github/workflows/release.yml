@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
+      prs_created: ${{ steps.release.outputs.prs_created }}
+      pr: ${{ steps.release.outputs.pr }}
     steps:
       # A GITHUB_TOKEN-authored PR needs a human approval GitHub itself
       # injects (rules/releases.md's "RELEASE_TOKEN PAT is not automatically
@@ -25,6 +27,33 @@ jobs:
         with:
           release-type: python
           token: ${{ secrets.RELEASE_TOKEN }}
+
+  sync-lockfile:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.prs_created == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      # release-please bumps the `version` key in pyproject.toml but has no
+      # idea uv.lock also records that same version for the package's own
+      # self-entry -- left alone, every release PR fails `uv sync --locked`
+      # in CI for a reason that has nothing to do with the release itself
+      # (confirmed live: alrayyes/pipeline-analytics-sdk-python#1).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ fromJSON(needs.release-please.outputs.pr).headBranchName }}
+          token: ${{ secrets.RELEASE_TOKEN }}
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.15"
+      - run: uv lock
+      - run: |
+          if ! git diff --quiet -- uv.lock; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add uv.lock
+            git commit -m "chore: sync uv.lock with release-please's version bump"
+            git push
+          fi
 
   publish:
     needs: release-please
