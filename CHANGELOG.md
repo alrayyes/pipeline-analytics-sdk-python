@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v0.1.0...v0.1.1) (2026-09-17)
+
+
+### Bug Fixes
+
+* **ci:** split Codecov upload out of the required test job ([#6](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/6)) ([852b983](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/852b983a340c1e62ad00445b7c94244b751bf20e))
+
 ## 0.1.0 (2026-09-17)
 
 
