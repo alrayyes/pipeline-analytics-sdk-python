@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.15"
+      - run: uv sync --locked --all-groups
+      - name: pytest
+        run: >-
+          uv run pytest --cov=pipeline_analytics --cov-report=xml
+          --junitxml=junit.xml -o junit_family=legacy
+      - name: Upload coverage to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage.xml
+          fail_ci_if_error: true
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          report_type: test_results
+          files: junit.xml
+          fail_ci_if_error: true
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.15"
+      - run: uv sync --locked --all-groups
+      - name: ruff format
+        run: uv run ruff format --check .
+      - name: ruff check
+        run: uv run ruff check .
+      - name: mypy
+        run: uv run mypy .
+      - name: pyproject-fmt
+        run: uvx pyproject-fmt==2.29.4 --check pyproject.toml
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.15"
+      - run: uv sync --locked --all-groups
+      - name: bandit
+        run: uv run bandit -r src/pipeline_analytics -x src/pipeline_analytics/_generated
+      - name: pip-audit
+        run: uv run pip-audit
+
+  mutation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.15"
+      - run: uv sync --locked --all-groups
+      - name: mutmut
+        run: |
+          uv run mutmut run || true
+          survivors="$(uv run mutmut results)"
+          if [ -n "$survivors" ]; then
+            echo "$survivors"
+            echo "Mutation testing found surviving mutants - write the missing test case(s) above." >&2
+            exit 1
+          fi
+
+  generated-code-is-fresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.15"
+      - run: uv sync --locked --all-groups
+      - name: Regenerating from the pinned spec reproduces the committed client
+        run: |
+          ./hack/fetch-spec.sh
+          uv run openapi-python-client generate --path openapi/openapi.yaml \
+            --meta none --output-path src/pipeline_analytics/_generated --overwrite
+          git diff --exit-code openapi/openapi.yaml src/pipeline_analytics/_generated

@@ -1,0 +1,83 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [ "hatchling==1.28" ]
+
+[project]
+name = "pipeline-analytics-sdk"
+version = "0.0.0"
+description = "Python client for pipeline-analytics's REST API"
+readme = "README.md"
+license = "MIT"
+authors = [ { name = "Ryan Kes", email = "ryan@andthensome.nl" } ]
+requires-python = ">=3.12"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
+]
+dependencies = [ "attrs==26.1", "httpx==0.28.1" ]
+urls.Homepage = "https://github.com/alrayyes/pipeline-analytics-sdk-python"
+urls.Issues = "https://github.com/alrayyes/pipeline-analytics-sdk-python/issues"
+
+[dependency-groups]
+dev = [
+  "bandit==1.9.4",
+  "mutmut==3.8",
+  "mypy==2.3.1",
+  "openapi-python-client==0.29.1",
+  "pip-audit==2.10.1",
+  "pytest==9.1.1",
+  "pytest-cov==7.1",
+  "ruff==0.16.8",
+]
+
+[tool.hatch]
+build.targets.wheel.packages = [ "src/pipeline_analytics" ]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+extend-exclude = [ "mutants", "src/pipeline_analytics/_generated" ]
+# Otherwise ruff only skips excluded paths while walking a directory --
+# lefthook and CI both pass staged/changed files explicitly, and without
+# this the exclude list is silently ignored for those invocations.
+force-exclude = true
+lint.select = [ "B", "E", "F", "I", "RUF", "S", "SIM", "UP" ]
+lint.per-file-ignores."tests/*" = [ "S101" ]
+
+[tool.bandit]
+exclude_dirs = [ "src/pipeline_analytics/_generated", "tests" ]
+
+[tool.mypy]
+exclude = [ "mutants", "src/pipeline_analytics/_generated" ]
+strict = true
+overrides = [ { module = "pipeline_analytics._generated.*", ignore_errors = true } ]
+
+[tool.pytest]
+ini_options.testpaths = [ "tests" ]
+
+[tool.coverage]
+run.source = [ "src/pipeline_analytics" ]
+run.omit = [ "src/pipeline_analytics/_generated/*" ]
+
+[tool.mutmut]
+# Only the hand-written layer -- mutating the generated client tests the
+# generator, not the SDK (rules/sdk-generation.md's "Testing against the
+# spec, not a hand-written stub").
+source_paths = [
+  "src/pipeline_analytics/client.py",
+  "src/pipeline_analytics/errors.py",
+  "src/pipeline_analytics/retry.py",
+  "src/pipeline_analytics/pagination.py",
+]
+# The rest of the package the mutated files import from -- not mutated,
+# but needed unmodified in the sandbox for the tests to even import.
+also_copy = [
+  "src/pipeline_analytics/__init__.py",
+  "src/pipeline_analytics/py.typed",
+  "src/pipeline_analytics/_generated/",
+  "pyproject.toml",
+  "uv.lock",
+]

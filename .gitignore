@@ -1,0 +1,14 @@
+/.venv/
+/dist/
+/coverage.xml
+/.coverage
+/junit.xml
+/.mutmut-cache
+/mutants/
+/.mypy_cache/
+/.pytest_cache/
+/.ruff_cache/
+/html/
+/node_modules/
+__pycache__/
+*.pyc
