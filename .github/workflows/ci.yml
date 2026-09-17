@@ -52,7 +52,12 @@ jobs:
       - name: mypy
         run: uv run mypy .
       - name: pyproject-fmt
-        run: uvx pyproject-fmt==2.29.4 --check pyproject.toml
+        # --keep-full-version: Dependabot writes a bumped dependency's exact
+        # upstream version string (e.g. "1.32.0") -- without this,
+        # pyproject-fmt's own PEP 440 trailing-zero canonicalization ("1.32")
+        # fights every such bump and turns an unrelated merge into a
+        # permanently red lint job (confirmed live: alrayyes/pipeline-analytics-sdk-python#3).
+        run: uvx pyproject-fmt==2.29.4 --check --keep-full-version pyproject.toml
 
   security:
     runs-on: ubuntu-latest

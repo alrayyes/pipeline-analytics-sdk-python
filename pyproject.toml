@@ -17,19 +17,19 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: 3.15",
 ]
-dependencies = [ "attrs==26.1", "httpx==0.28.1" ]
+dependencies = [ "attrs==26.1.0", "httpx==0.28.1" ]
 urls.Homepage = "https://github.com/alrayyes/pipeline-analytics-sdk-python"
 urls.Issues = "https://github.com/alrayyes/pipeline-analytics-sdk-python/issues"
 
 [dependency-groups]
 dev = [
   "bandit==1.9.4",
-  "mutmut==3.8",
+  "mutmut==3.8.0",
   "mypy==2.3.1",
   "openapi-python-client==0.29.1",
   "pip-audit==2.10.1",
   "pytest==9.1.1",
-  "pytest-cov==7.1",
+  "pytest-cov==7.1.0",
   "ruff==0.16.8",
 ]
 
