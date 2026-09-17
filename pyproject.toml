@@ -4,7 +4,7 @@ requires = [ "hatchling==1.32.0" ]
 
 [project]
 name = "pipeline-analytics-sdk"
-version = "0.0.0"
+version = "0.1.0"
 description = "Python client for pipeline-analytics's REST API"
 readme = "README.md"
 license = "MIT"

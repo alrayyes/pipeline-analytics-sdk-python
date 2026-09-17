@@ -1,0 +1,15 @@
+# Changelog
+
+## 0.1.0 (2026-09-17)
+
+
+### Features
+
+* bootstrap Python SDK generated from pipeline-analytics' OpenAPI spec ([87a708c](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/87a708c38b887f5acb6f07e943705f6cc215c785))
+
+
+### Bug Fixes
+
+* **ci:** auto-sync uv.lock on every release-please pull request ([#4](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/4)) ([b846780](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/b846780988b63eed8afb44e26653277a243c4fe6))
+* **ci:** quote the autorelease if: condition ([#5](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/5)) ([424b805](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/424b8057dfb3420609d67bdb9a2d2454ff1a58df))
+* regenerate the client from a clean tree instead of a ruff-touched one ([#3](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/3)) ([7dd064c](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/7dd064c9a0062a5657fc7e40aafc716ead3a6d93))
