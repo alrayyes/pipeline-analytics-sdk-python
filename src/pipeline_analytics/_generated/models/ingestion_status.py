@@ -1,6 +1,5 @@
 from enum import StrEnum
 
-
 class IngestionStatus(StrEnum):
     ACTIVE = "active"
     DEGRADED = "degraded"

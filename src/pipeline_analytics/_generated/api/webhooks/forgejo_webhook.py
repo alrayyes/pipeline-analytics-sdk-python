@@ -1,13 +1,17 @@
 from http import HTTPStatus
 from typing import Any, cast
+from urllib.parse import quote
 
 import httpx
 
-from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...types import Response, UNSET
+from ... import errors
+
 from ...models.error import Error
 from ...models.forgejo_webhook_body import ForgejoWebhookBody
-from ...types import Response
+from typing import cast
+
 
 
 def _get_kwargs(
@@ -15,11 +19,18 @@ def _get_kwargs(
     body: ForgejoWebhookBody,
     x_forgejo_signature: str,
     x_forgejo_event: str,
+
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
     headers["X-Forgejo-Signature"] = x_forgejo_signature
 
     headers["X-Forgejo-Event"] = x_forgejo_event
+
+
+
+    
+
+    
 
     _kwargs: dict[str, Any] = {
         "method": "post",
@@ -34,6 +45,7 @@ def _get_kwargs(
     return _kwargs
 
 
+
 def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Any | Error | None:
     if response.status_code == 202:
         response_202 = cast(Any, None)
@@ -41,6 +53,8 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
+
+
 
         return response_401
 
@@ -65,8 +79,9 @@ def sync_detailed(
     body: ForgejoWebhookBody,
     x_forgejo_signature: str,
     x_forgejo_event: str,
+
 ) -> Response[Any | Error]:
-    """Forgejo Actions webhook receiver
+    """ Forgejo Actions webhook receiver
 
     Args:
         x_forgejo_signature (str):
@@ -79,12 +94,14 @@ def sync_detailed(
 
     Returns:
         Response[Any | Error]
-    """
+     """
+
 
     kwargs = _get_kwargs(
         body=body,
-        x_forgejo_signature=x_forgejo_signature,
-        x_forgejo_event=x_forgejo_event,
+x_forgejo_signature=x_forgejo_signature,
+x_forgejo_event=x_forgejo_event,
+
     )
 
     response = client.get_httpx_client().request(
@@ -93,15 +110,15 @@ def sync_detailed(
 
     return _build_response(client=client, response=response)
 
-
 def sync(
     *,
     client: AuthenticatedClient | Client,
     body: ForgejoWebhookBody,
     x_forgejo_signature: str,
     x_forgejo_event: str,
+
 ) -> Any | Error | None:
-    """Forgejo Actions webhook receiver
+    """ Forgejo Actions webhook receiver
 
     Args:
         x_forgejo_signature (str):
@@ -114,15 +131,16 @@ def sync(
 
     Returns:
         Any | Error
-    """
+     """
+
 
     return sync_detailed(
         client=client,
-        body=body,
-        x_forgejo_signature=x_forgejo_signature,
-        x_forgejo_event=x_forgejo_event,
-    ).parsed
+body=body,
+x_forgejo_signature=x_forgejo_signature,
+x_forgejo_event=x_forgejo_event,
 
+    ).parsed
 
 async def asyncio_detailed(
     *,
@@ -130,8 +148,9 @@ async def asyncio_detailed(
     body: ForgejoWebhookBody,
     x_forgejo_signature: str,
     x_forgejo_event: str,
+
 ) -> Response[Any | Error]:
-    """Forgejo Actions webhook receiver
+    """ Forgejo Actions webhook receiver
 
     Args:
         x_forgejo_signature (str):
@@ -144,18 +163,21 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any | Error]
-    """
+     """
+
 
     kwargs = _get_kwargs(
         body=body,
-        x_forgejo_signature=x_forgejo_signature,
-        x_forgejo_event=x_forgejo_event,
+x_forgejo_signature=x_forgejo_signature,
+x_forgejo_event=x_forgejo_event,
+
     )
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(
+        **kwargs
+    )
 
     return _build_response(client=client, response=response)
-
 
 async def asyncio(
     *,
@@ -163,8 +185,9 @@ async def asyncio(
     body: ForgejoWebhookBody,
     x_forgejo_signature: str,
     x_forgejo_event: str,
+
 ) -> Any | Error | None:
-    """Forgejo Actions webhook receiver
+    """ Forgejo Actions webhook receiver
 
     Args:
         x_forgejo_signature (str):
@@ -177,13 +200,13 @@ async def asyncio(
 
     Returns:
         Any | Error
-    """
+     """
 
-    return (
-        await asyncio_detailed(
-            client=client,
-            body=body,
-            x_forgejo_signature=x_forgejo_signature,
-            x_forgejo_event=x_forgejo_event,
-        )
-    ).parsed
+
+    return (await asyncio_detailed(
+        client=client,
+body=body,
+x_forgejo_signature=x_forgejo_signature,
+x_forgejo_event=x_forgejo_event,
+
+    )).parsed

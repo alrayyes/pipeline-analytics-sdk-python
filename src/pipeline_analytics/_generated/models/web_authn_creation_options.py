@@ -1,31 +1,50 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import Any, TypeVar, BinaryIO, TextIO, TYPE_CHECKING, Generator
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..types import UNSET, Unset
+
+
+
+
+
+
+
 T = TypeVar("T", bound="WebAuthnCreationOptions")
+
 
 
 @_attrs_define
 class WebAuthnCreationOptions:
-    """A WebAuthn PublicKeyCredentialCreationOptions (opaque to the client beyond browser API use)."""
+    """ A WebAuthn PublicKeyCredentialCreationOptions (opaque to the client beyond browser API use).
+
+     """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
 
+
+
+
+    def to_dict(self) -> dict[str, Any]:
+        
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
 
         return field_dict
 
+
+
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        web_authn_creation_options = cls()
+        web_authn_creation_options = cls(
+        )
+
 
         web_authn_creation_options.additional_properties = d
         return web_authn_creation_options

@@ -1,6 +1,5 @@
 from enum import StrEnum
 
-
 class PipelineSummaryTriggeredSignalsItem(StrEnum):
     DURATION_REGRESSION = "duration_regression"
     FAILURE_RATE = "failure_rate"

@@ -1,77 +1,96 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import Any, TypeVar, BinaryIO, TextIO, TYPE_CHECKING, Generator
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from ..types import UNSET, Unset
+from typing import cast
+
 if TYPE_CHECKING:
-    from ..models.rate_limit_status import RateLimitStatus
+  from ..models.rate_limit_status import RateLimitStatus
+
+
+
 
 
 T = TypeVar("T", bound="GitHubTokenUsage")
 
 
+
 @_attrs_define
 class GitHubTokenUsage:
-    """
-    Attributes:
-        token_masked (str): Last four characters only, e.g. "****1234".
-        repos (list[str]): owner/name identifiers of every repo tracked under this token.
-        status (RateLimitStatus | Unset):
-    """
+    """ 
+        Attributes:
+            token_masked (str): Last four characters only, e.g. "****1234".
+            repos (list[str]): owner/name identifiers of every repo tracked under this token.
+            status (RateLimitStatus | Unset):
+     """
 
     token_masked: str
     repos: list[str]
     status: RateLimitStatus | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
+
+
+
+
     def to_dict(self) -> dict[str, Any]:
+        from ..models.rate_limit_status import RateLimitStatus # noqa: PLC0415
         token_masked = self.token_masked
 
         repos = self.repos
+
+
 
         status: dict[str, Any] | Unset = UNSET
         if not isinstance(self.status, Unset):
             status = self.status.to_dict()
 
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "tokenMasked": token_masked,
-                "repos": repos,
-            }
-        )
+        field_dict.update({
+            "tokenMasked": token_masked,
+            "repos": repos,
+        })
         if status is not UNSET:
             field_dict["status"] = status
 
         return field_dict
 
+
+
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.rate_limit_status import RateLimitStatus
-
+        from ..models.rate_limit_status import RateLimitStatus # noqa: PLC0415
         d = dict(src_dict)
         token_masked = d.pop("tokenMasked")
 
         repos = cast(list[str], d.pop("repos"))
 
+
         _status = d.pop("status", UNSET)
         status: RateLimitStatus | Unset
-        if isinstance(_status, Unset):
+        if isinstance(_status,  Unset):
             status = UNSET
         else:
             status = RateLimitStatus.from_dict(_status)
+
+
+
 
         git_hub_token_usage = cls(
             token_masked=token_masked,
             repos=repos,
             status=status,
         )
+
 
         git_hub_token_usage.additional_properties = d
         return git_hub_token_usage

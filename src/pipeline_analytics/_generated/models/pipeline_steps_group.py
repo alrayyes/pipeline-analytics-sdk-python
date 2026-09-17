@@ -1,27 +1,35 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import Any, TypeVar, BinaryIO, TextIO, TYPE_CHECKING, Generator
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..types import UNSET, Unset
+
+from typing import cast
+
 if TYPE_CHECKING:
-    from ..models.step import Step
+  from ..models.step import Step
+
+
+
 
 
 T = TypeVar("T", bound="PipelineStepsGroup")
 
 
+
 @_attrs_define
 class PipelineStepsGroup:
-    """
-    Attributes:
-        pipeline_id (str):
-        pipeline_name (str):
-        repo_id (str):
-        steps (list[Step]):
-    """
+    """ 
+        Attributes:
+            pipeline_id (str):
+            pipeline_name (str):
+            repo_id (str):
+            steps (list[Step]):
+     """
 
     pipeline_id: str
     pipeline_name: str
@@ -29,7 +37,12 @@ class PipelineStepsGroup:
     steps: list[Step]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
+
+
+
+
     def to_dict(self) -> dict[str, Any]:
+        from ..models.step import Step # noqa: PLC0415
         pipeline_id = self.pipeline_id
 
         pipeline_name = self.pipeline_name
@@ -41,23 +54,25 @@ class PipelineStepsGroup:
             steps_item = steps_item_data.to_dict()
             steps.append(steps_item)
 
+
+
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "pipelineId": pipeline_id,
-                "pipelineName": pipeline_name,
-                "repoId": repo_id,
-                "steps": steps,
-            }
-        )
+        field_dict.update({
+            "pipelineId": pipeline_id,
+            "pipelineName": pipeline_name,
+            "repoId": repo_id,
+            "steps": steps,
+        })
 
         return field_dict
 
+
+
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.step import Step
-
+        from ..models.step import Step # noqa: PLC0415
         d = dict(src_dict)
         pipeline_id = d.pop("pipelineId")
 
@@ -67,10 +82,13 @@ class PipelineStepsGroup:
 
         steps = []
         _steps = d.pop("steps")
-        for steps_item_data in _steps:
+        for steps_item_data in (_steps):
             steps_item = Step.from_dict(steps_item_data)
 
+
+
             steps.append(steps_item)
+
 
         pipeline_steps_group = cls(
             pipeline_id=pipeline_id,
@@ -78,6 +96,7 @@ class PipelineStepsGroup:
             repo_id=repo_id,
             steps=steps,
         )
+
 
         pipeline_steps_group.additional_properties = d
         return pipeline_steps_group

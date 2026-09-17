@@ -9,7 +9,7 @@ pre-commit:
       run: uv run ruff check --fix {staged_files} && git add {staged_files}
     pyproject-fmt:
       glob: "pyproject.toml"
-      run: uvx pyproject-fmt==2.29.4 {staged_files} && git add {staged_files}
+      run: uvx pyproject-fmt==2.29.4 --keep-full-version {staged_files} && git add {staged_files}
 
 commit-msg:
   commands:
