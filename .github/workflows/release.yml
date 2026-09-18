@@ -8,9 +8,14 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       prs_created: ${{ steps.release.outputs.prs_created }}
@@ -32,6 +37,7 @@ jobs:
     needs: release-please
     if: ${{ needs.release-please.outputs.prs_created == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       # release-please bumps the `version` key in pyproject.toml but has no
       # idea uv.lock also records that same version for the package's own
@@ -59,6 +65,7 @@ jobs:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     environment: pypi
     permissions:
       id-token: write # PyPI Trusted Publishing (OIDC) -- no token to manage
