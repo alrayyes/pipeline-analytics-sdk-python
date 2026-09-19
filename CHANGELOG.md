@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v0.1.1...v0.1.2) (2026-09-19)
+
+
+### Documentation
+
+* publish generated API reference via mkdocs ([#11](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/11)) ([0bee1ac](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/0bee1ac328450d75d71b404e27dfe69179d504fb))
+
 ## [0.1.1](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v0.1.0...v0.1.1) (2026-09-17)
 
 
