@@ -10,5 +10,6 @@
 /.ruff_cache/
 /html/
 /node_modules/
+/site/
 __pycache__/
 *.pyc

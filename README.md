@@ -4,6 +4,7 @@
 [![PyPI](https://img.shields.io/pypi/v/pipeline-analytics-sdk.svg)](https://pypi.org/project/pipeline-analytics-sdk/)
 [![Codecov](https://codecov.io/gh/alrayyes/pipeline-analytics-sdk-python/graph/badge.svg)](https://codecov.io/gh/alrayyes/pipeline-analytics-sdk-python)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://alrayyes.github.io/pipeline-analytics-sdk-python/)
 
 A Python client for [pipeline-analytics](https://github.com/alrayyes/pipeline-analytics)'s
 REST API, generated from its OpenAPI spec with
