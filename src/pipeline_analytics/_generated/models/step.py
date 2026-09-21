@@ -29,8 +29,10 @@ class Step:
             queue_seconds (float):
             exec_seconds (float):
             failure_rate (float):
+            failure_count (int): Times this step failed within the window.
             flaky (bool):
-            forge_url (str | Unset): Deep link to this step's log on the originating forge.
+            forge_url (str | Unset): Deep link to one occurrence's log on the originating forge -- not necessarily one where
+                the step failed. GET .../flaky-runs is the reliable way to reach a run the step actually failed on.
      """
 
     id: str
@@ -39,6 +41,7 @@ class Step:
     queue_seconds: float
     exec_seconds: float
     failure_rate: float
+    failure_count: int
     flaky: bool
     forge_url: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -60,6 +63,8 @@ class Step:
 
         failure_rate = self.failure_rate
 
+        failure_count = self.failure_count
+
         flaky = self.flaky
 
         forge_url = self.forge_url
@@ -74,6 +79,7 @@ class Step:
             "queueSeconds": queue_seconds,
             "execSeconds": exec_seconds,
             "failureRate": failure_rate,
+            "failureCount": failure_count,
             "flaky": flaky,
         })
         if forge_url is not UNSET:
@@ -98,6 +104,8 @@ class Step:
 
         failure_rate = d.pop("failureRate")
 
+        failure_count = d.pop("failureCount")
+
         flaky = d.pop("flaky")
 
         forge_url = d.pop("forgeUrl", UNSET)
@@ -109,6 +117,7 @@ class Step:
             queue_seconds=queue_seconds,
             exec_seconds=exec_seconds,
             failure_rate=failure_rate,
+            failure_count=failure_count,
             flaky=flaky,
             forge_url=forge_url,
         )

@@ -9,45 +9,34 @@ from ...types import Response, UNSET
 from ... import errors
 
 from ...models.error import Error
-from ...models.repo import Repo
-from ...models.repo_registration import RepoRegistration
 from typing import cast
 
 
 
 def _get_kwargs(
-    *,
-    body: RepoRegistration,
+    credential_id: str,
 
 ) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
-
+    
 
     
 
     
 
     _kwargs: dict[str, Any] = {
-        "method": "post",
-        "url": "/api/repos",
+        "method": "delete",
+        "url": "/api/auth/credentials/{credential_id}".format(credential_id=quote(str(credential_id), safe=""),),
     }
 
-    _kwargs["json"] = body.to_dict()
 
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | Repo | None:
-    if response.status_code == 201:
-        response_201 = Repo.from_dict(response.json())
-
-
-
-        return response_201
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Any | Error | None:
+    if response.status_code == 204:
+        response_204 = cast(Any, None)
+        return response_204
 
     if response.status_code == 400:
         response_400 = Error.from_dict(response.json())
@@ -63,6 +52,13 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
         return response_401
 
+    if response.status_code == 404:
+        response_404 = Error.from_dict(response.json())
+
+
+
+        return response_404
+
     if response.status_code == 409:
         response_409 = Error.from_dict(response.json())
 
@@ -76,7 +72,7 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
         return None
 
 
-def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | Repo]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Any | Error]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -86,30 +82,30 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
 
 def sync_detailed(
+    credential_id: str,
     *,
-    client: AuthenticatedClient | Client,
-    body: RepoRegistration,
+    client: AuthenticatedClient,
 
-) -> Response[Error | Repo]:
-    """ Register a repository for tracking
+) -> Response[Any | Error]:
+    """ Revoke a credential
 
-     Stores the supplied token encrypted at rest and creates a webhook on the repository (forge-
-    ingestion/spec.md's "Repo tracking registration" and "Webhook registration on tracking").
+     Session-only, same reasoning as addCredentialOptions. Rejected with 409 if credentialId is the
+    account's last remaining credential -- revoking it would leave the account with no way to log in.
 
     Args:
-        body (RepoRegistration):
+        credential_id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | Repo]
+        Response[Any | Error]
      """
 
 
     kwargs = _get_kwargs(
-        body=body,
+        credential_id=credential_id,
 
     )
 
@@ -120,59 +116,59 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 def sync(
+    credential_id: str,
     *,
-    client: AuthenticatedClient | Client,
-    body: RepoRegistration,
+    client: AuthenticatedClient,
 
-) -> Error | Repo | None:
-    """ Register a repository for tracking
+) -> Any | Error | None:
+    """ Revoke a credential
 
-     Stores the supplied token encrypted at rest and creates a webhook on the repository (forge-
-    ingestion/spec.md's "Repo tracking registration" and "Webhook registration on tracking").
+     Session-only, same reasoning as addCredentialOptions. Rejected with 409 if credentialId is the
+    account's last remaining credential -- revoking it would leave the account with no way to log in.
 
     Args:
-        body (RepoRegistration):
+        credential_id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | Repo
+        Any | Error
      """
 
 
     return sync_detailed(
-        client=client,
-body=body,
+        credential_id=credential_id,
+client=client,
 
     ).parsed
 
 async def asyncio_detailed(
+    credential_id: str,
     *,
-    client: AuthenticatedClient | Client,
-    body: RepoRegistration,
+    client: AuthenticatedClient,
 
-) -> Response[Error | Repo]:
-    """ Register a repository for tracking
+) -> Response[Any | Error]:
+    """ Revoke a credential
 
-     Stores the supplied token encrypted at rest and creates a webhook on the repository (forge-
-    ingestion/spec.md's "Repo tracking registration" and "Webhook registration on tracking").
+     Session-only, same reasoning as addCredentialOptions. Rejected with 409 if credentialId is the
+    account's last remaining credential -- revoking it would leave the account with no way to log in.
 
     Args:
-        body (RepoRegistration):
+        credential_id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | Repo]
+        Response[Any | Error]
      """
 
 
     kwargs = _get_kwargs(
-        body=body,
+        credential_id=credential_id,
 
     )
 
@@ -183,30 +179,30 @@ async def asyncio_detailed(
     return _build_response(client=client, response=response)
 
 async def asyncio(
+    credential_id: str,
     *,
-    client: AuthenticatedClient | Client,
-    body: RepoRegistration,
+    client: AuthenticatedClient,
 
-) -> Error | Repo | None:
-    """ Register a repository for tracking
+) -> Any | Error | None:
+    """ Revoke a credential
 
-     Stores the supplied token encrypted at rest and creates a webhook on the repository (forge-
-    ingestion/spec.md's "Repo tracking registration" and "Webhook registration on tracking").
+     Session-only, same reasoning as addCredentialOptions. Rejected with 409 if credentialId is the
+    account's last remaining credential -- revoking it would leave the account with no way to log in.
 
     Args:
-        body (RepoRegistration):
+        credential_id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | Repo
+        Any | Error
      """
 
 
     return (await asyncio_detailed(
-        client=client,
-body=body,
+        credential_id=credential_id,
+client=client,
 
     )).parsed
