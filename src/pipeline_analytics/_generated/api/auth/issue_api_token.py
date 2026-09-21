@@ -8,20 +8,16 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
+from ...models.api_token import ApiToken
 from ...models.error import Error
-from ...models.repo import Repo
-from ...models.repo_registration import RepoRegistration
 from typing import cast
 
 
 
 def _get_kwargs(
-    *,
-    body: RepoRegistration,
-
+    
 ) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
-
+    
 
     
 
@@ -29,32 +25,21 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": "/api/repos",
+        "url": "/api/auth/tokens",
     }
 
-    _kwargs["json"] = body.to_dict()
 
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | Repo | None:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> ApiToken | Error | None:
     if response.status_code == 201:
-        response_201 = Repo.from_dict(response.json())
+        response_201 = ApiToken.from_dict(response.json())
 
 
 
         return response_201
-
-    if response.status_code == 400:
-        response_400 = Error.from_dict(response.json())
-
-
-
-        return response_400
 
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
@@ -63,20 +48,13 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
         return response_401
 
-    if response.status_code == 409:
-        response_409 = Error.from_dict(response.json())
-
-
-
-        return response_409
-
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
         return None
 
 
-def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | Repo]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[ApiToken | Error]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -87,30 +65,25 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient | Client,
-    body: RepoRegistration,
+    client: AuthenticatedClient,
 
-) -> Response[Error | Repo]:
-    """ Register a repository for tracking
+) -> Response[ApiToken | Error]:
+    """ Issue a new API token
 
-     Stores the supplied token encrypted at rest and creates a webhook on the repository (forge-
-    ingestion/spec.md's "Repo tracking registration" and "Webhook registration on tracking").
-
-    Args:
-        body (RepoRegistration):
+     Session-only -- an API token can't be used to issue another one. The raw token value is returned
+    once, here, and is never recoverable afterward.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | Repo]
+        Response[ApiToken | Error]
      """
 
 
     kwargs = _get_kwargs(
-        body=body,
-
+        
     )
 
     response = client.get_httpx_client().request(
@@ -121,59 +94,49 @@ def sync_detailed(
 
 def sync(
     *,
-    client: AuthenticatedClient | Client,
-    body: RepoRegistration,
+    client: AuthenticatedClient,
 
-) -> Error | Repo | None:
-    """ Register a repository for tracking
+) -> ApiToken | Error | None:
+    """ Issue a new API token
 
-     Stores the supplied token encrypted at rest and creates a webhook on the repository (forge-
-    ingestion/spec.md's "Repo tracking registration" and "Webhook registration on tracking").
-
-    Args:
-        body (RepoRegistration):
+     Session-only -- an API token can't be used to issue another one. The raw token value is returned
+    once, here, and is never recoverable afterward.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | Repo
+        ApiToken | Error
      """
 
 
     return sync_detailed(
         client=client,
-body=body,
 
     ).parsed
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient | Client,
-    body: RepoRegistration,
+    client: AuthenticatedClient,
 
-) -> Response[Error | Repo]:
-    """ Register a repository for tracking
+) -> Response[ApiToken | Error]:
+    """ Issue a new API token
 
-     Stores the supplied token encrypted at rest and creates a webhook on the repository (forge-
-    ingestion/spec.md's "Repo tracking registration" and "Webhook registration on tracking").
-
-    Args:
-        body (RepoRegistration):
+     Session-only -- an API token can't be used to issue another one. The raw token value is returned
+    once, here, and is never recoverable afterward.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | Repo]
+        Response[ApiToken | Error]
      """
 
 
     kwargs = _get_kwargs(
-        body=body,
-
+        
     )
 
     response = await client.get_async_httpx_client().request(
@@ -184,29 +147,24 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: AuthenticatedClient | Client,
-    body: RepoRegistration,
+    client: AuthenticatedClient,
 
-) -> Error | Repo | None:
-    """ Register a repository for tracking
+) -> ApiToken | Error | None:
+    """ Issue a new API token
 
-     Stores the supplied token encrypted at rest and creates a webhook on the repository (forge-
-    ingestion/spec.md's "Repo tracking registration" and "Webhook registration on tracking").
-
-    Args:
-        body (RepoRegistration):
+     Session-only -- an API token can't be used to issue another one. The raw token value is returned
+    once, here, and is never recoverable afterward.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | Repo
+        ApiToken | Error
      """
 
 
     return (await asyncio_detailed(
         client=client,
-body=body,
 
     )).parsed

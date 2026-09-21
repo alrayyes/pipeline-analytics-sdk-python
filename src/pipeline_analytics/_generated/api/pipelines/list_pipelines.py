@@ -9,23 +9,47 @@ from ...types import Response, UNSET
 from ... import errors
 
 from ...models.error import Error
-from ...models.pipeline_summary import PipelineSummary
+from ...models.forge import Forge
+from ...models.pipeline_list import PipelineList
+from ...types import UNSET, Unset
 from typing import cast
 
 
 
 def _get_kwargs(
-    
+    *,
+    repo_id: str | Unset = UNSET,
+    forge: Forge | Unset = UNSET,
+    limit: int | Unset = UNSET,
+    offset: int | Unset = 0,
+
 ) -> dict[str, Any]:
     
 
     
 
-    
+    params: dict[str, Any] = {}
+
+    params["repoId"] = repo_id
+
+    json_forge: str | Unset = UNSET
+    if not isinstance(forge, Unset):
+        json_forge = forge.value
+
+    params["forge"] = json_forge
+
+    params["limit"] = limit
+
+    params["offset"] = offset
+
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
 
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/api/pipelines",
+        "params": params,
     }
 
 
@@ -33,16 +57,11 @@ def _get_kwargs(
 
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | list[PipelineSummary] | None:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | PipelineList | None:
     if response.status_code == 200:
-        response_200 = []
-        _response_200 = response.json()
-        for response_200_item_data in (_response_200):
-            response_200_item = PipelineSummary.from_dict(response_200_item_data)
+        response_200 = PipelineList.from_dict(response.json())
 
 
-
-            response_200.append(response_200_item)
 
         return response_200
 
@@ -59,7 +78,7 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
         return None
 
 
-def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | list[PipelineSummary]]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | PipelineList]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -71,21 +90,35 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 def sync_detailed(
     *,
     client: AuthenticatedClient | Client,
+    repo_id: str | Unset = UNSET,
+    forge: Forge | Unset = UNSET,
+    limit: int | Unset = UNSET,
+    offset: int | Unset = 0,
 
-) -> Response[Error | list[PipelineSummary]]:
-    """ Overview of every tracked pipeline and its health status
+) -> Response[Error | PipelineList]:
+    """ A page of tracked pipelines and their health status
+
+    Args:
+        repo_id (str | Unset):
+        forge (Forge | Unset):
+        limit (int | Unset):
+        offset (int | Unset):  Default: 0.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[PipelineSummary]]
+        Response[Error | PipelineList]
      """
 
 
     kwargs = _get_kwargs(
-        
+        repo_id=repo_id,
+forge=forge,
+limit=limit,
+offset=offset,
+
     )
 
     response = client.get_httpx_client().request(
@@ -97,42 +130,70 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient | Client,
+    repo_id: str | Unset = UNSET,
+    forge: Forge | Unset = UNSET,
+    limit: int | Unset = UNSET,
+    offset: int | Unset = 0,
 
-) -> Error | list[PipelineSummary] | None:
-    """ Overview of every tracked pipeline and its health status
+) -> Error | PipelineList | None:
+    """ A page of tracked pipelines and their health status
+
+    Args:
+        repo_id (str | Unset):
+        forge (Forge | Unset):
+        limit (int | Unset):
+        offset (int | Unset):  Default: 0.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[PipelineSummary]
+        Error | PipelineList
      """
 
 
     return sync_detailed(
         client=client,
+repo_id=repo_id,
+forge=forge,
+limit=limit,
+offset=offset,
 
     ).parsed
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient | Client,
+    repo_id: str | Unset = UNSET,
+    forge: Forge | Unset = UNSET,
+    limit: int | Unset = UNSET,
+    offset: int | Unset = 0,
 
-) -> Response[Error | list[PipelineSummary]]:
-    """ Overview of every tracked pipeline and its health status
+) -> Response[Error | PipelineList]:
+    """ A page of tracked pipelines and their health status
+
+    Args:
+        repo_id (str | Unset):
+        forge (Forge | Unset):
+        limit (int | Unset):
+        offset (int | Unset):  Default: 0.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[PipelineSummary]]
+        Response[Error | PipelineList]
      """
 
 
     kwargs = _get_kwargs(
-        
+        repo_id=repo_id,
+forge=forge,
+limit=limit,
+offset=offset,
+
     )
 
     response = await client.get_async_httpx_client().request(
@@ -144,20 +205,34 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient | Client,
+    repo_id: str | Unset = UNSET,
+    forge: Forge | Unset = UNSET,
+    limit: int | Unset = UNSET,
+    offset: int | Unset = 0,
 
-) -> Error | list[PipelineSummary] | None:
-    """ Overview of every tracked pipeline and its health status
+) -> Error | PipelineList | None:
+    """ A page of tracked pipelines and their health status
+
+    Args:
+        repo_id (str | Unset):
+        forge (Forge | Unset):
+        limit (int | Unset):
+        offset (int | Unset):  Default: 0.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[PipelineSummary]
+        Error | PipelineList
      """
 
 
     return (await asyncio_detailed(
         client=client,
+repo_id=repo_id,
+forge=forge,
+limit=limit,
+offset=offset,
 
     )).parsed

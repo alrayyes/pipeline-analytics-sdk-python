@@ -9,39 +9,24 @@ from ...types import Response, UNSET
 from ... import errors
 
 from ...models.error import Error
-from ...models.unhealthy_steps_list import UnhealthyStepsList
-from ...types import UNSET, Unset
+from ...models.run_detail import RunDetail
 from typing import cast
 
 
 
 def _get_kwargs(
-    *,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
+    run_id: str,
 
 ) -> dict[str, Any]:
     
 
     
 
-    params: dict[str, Any] = {}
-
-    params["window"] = window
-
-    params["limit"] = limit
-
-    params["offset"] = offset
-
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
+    
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/api/steps/unhealthy",
-        "params": params,
+        "url": "/api/runs/{run_id}/steps".format(run_id=quote(str(run_id), safe=""),),
     }
 
 
@@ -49,9 +34,9 @@ def _get_kwargs(
 
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | UnhealthyStepsList | None:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | RunDetail | None:
     if response.status_code == 200:
-        response_200 = UnhealthyStepsList.from_dict(response.json())
+        response_200 = RunDetail.from_dict(response.json())
 
 
 
@@ -64,13 +49,20 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
         return response_401
 
+    if response.status_code == 404:
+        response_404 = Error.from_dict(response.json())
+
+
+
+        return response_404
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
         return None
 
 
-def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | UnhealthyStepsList]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | RunDetail]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -80,33 +72,30 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
 
 def sync_detailed(
+    run_id: str,
     *,
     client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
 
-) -> Response[Error | UnhealthyStepsList]:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Response[Error | RunDetail]:
+    """ One run's own steps and their statuses
+
+     What a flaky run in GET .../flaky-runs drills down into -- scoped to a single run, so each step's
+    forgeUrl points at the exact job that ran, never a different occurrence of the same step name.
 
     Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+        run_id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | UnhealthyStepsList]
+        Response[Error | RunDetail]
      """
 
 
     kwargs = _get_kwargs(
-        window=window,
-limit=limit,
-offset=offset,
+        run_id=run_id,
 
     )
 
@@ -117,65 +106,59 @@ offset=offset,
     return _build_response(client=client, response=response)
 
 def sync(
+    run_id: str,
     *,
     client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
 
-) -> Error | UnhealthyStepsList | None:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Error | RunDetail | None:
+    """ One run's own steps and their statuses
+
+     What a flaky run in GET .../flaky-runs drills down into -- scoped to a single run, so each step's
+    forgeUrl points at the exact job that ran, never a different occurrence of the same step name.
 
     Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+        run_id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | UnhealthyStepsList
+        Error | RunDetail
      """
 
 
     return sync_detailed(
-        client=client,
-window=window,
-limit=limit,
-offset=offset,
+        run_id=run_id,
+client=client,
 
     ).parsed
 
 async def asyncio_detailed(
+    run_id: str,
     *,
     client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
 
-) -> Response[Error | UnhealthyStepsList]:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Response[Error | RunDetail]:
+    """ One run's own steps and their statuses
+
+     What a flaky run in GET .../flaky-runs drills down into -- scoped to a single run, so each step's
+    forgeUrl points at the exact job that ran, never a different occurrence of the same step name.
 
     Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+        run_id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | UnhealthyStepsList]
+        Response[Error | RunDetail]
      """
 
 
     kwargs = _get_kwargs(
-        window=window,
-limit=limit,
-offset=offset,
+        run_id=run_id,
 
     )
 
@@ -186,33 +169,30 @@ offset=offset,
     return _build_response(client=client, response=response)
 
 async def asyncio(
+    run_id: str,
     *,
     client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
 
-) -> Error | UnhealthyStepsList | None:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Error | RunDetail | None:
+    """ One run's own steps and their statuses
+
+     What a flaky run in GET .../flaky-runs drills down into -- scoped to a single run, so each step's
+    forgeUrl points at the exact job that ran, never a different occurrence of the same step name.
 
     Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+        run_id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | UnhealthyStepsList
+        Error | RunDetail
      """
 
 
     return (await asyncio_detailed(
-        client=client,
-window=window,
-limit=limit,
-offset=offset,
+        run_id=run_id,
+client=client,
 
     )).parsed

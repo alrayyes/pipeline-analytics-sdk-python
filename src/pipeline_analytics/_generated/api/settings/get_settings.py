@@ -9,39 +9,23 @@ from ...types import Response, UNSET
 from ... import errors
 
 from ...models.error import Error
-from ...models.unhealthy_steps_list import UnhealthyStepsList
-from ...types import UNSET, Unset
+from ...models.settings import Settings
 from typing import cast
 
 
 
 def _get_kwargs(
-    *,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
-
+    
 ) -> dict[str, Any]:
     
 
     
 
-    params: dict[str, Any] = {}
-
-    params["window"] = window
-
-    params["limit"] = limit
-
-    params["offset"] = offset
-
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
+    
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/api/steps/unhealthy",
-        "params": params,
+        "url": "/api/settings",
     }
 
 
@@ -49,9 +33,9 @@ def _get_kwargs(
 
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | UnhealthyStepsList | None:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | Settings | None:
     if response.status_code == 200:
-        response_200 = UnhealthyStepsList.from_dict(response.json())
+        response_200 = Settings.from_dict(response.json())
 
 
 
@@ -70,7 +54,7 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
         return None
 
 
-def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | UnhealthyStepsList]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | Settings]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -82,32 +66,24 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 def sync_detailed(
     *,
     client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
 
-) -> Response[Error | UnhealthyStepsList]:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Response[Error | Settings]:
+    """ The dashboard account's persisted UI settings
 
-    Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+     Every setting is always present in the response, each one either an explicitly-stored value or its
+    documented default -- never null or missing.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | UnhealthyStepsList]
+        Response[Error | Settings]
      """
 
 
     kwargs = _get_kwargs(
-        window=window,
-limit=limit,
-offset=offset,
-
+        
     )
 
     response = client.get_httpx_client().request(
@@ -119,64 +95,48 @@ offset=offset,
 def sync(
     *,
     client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
 
-) -> Error | UnhealthyStepsList | None:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Error | Settings | None:
+    """ The dashboard account's persisted UI settings
 
-    Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+     Every setting is always present in the response, each one either an explicitly-stored value or its
+    documented default -- never null or missing.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | UnhealthyStepsList
+        Error | Settings
      """
 
 
     return sync_detailed(
         client=client,
-window=window,
-limit=limit,
-offset=offset,
 
     ).parsed
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
 
-) -> Response[Error | UnhealthyStepsList]:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Response[Error | Settings]:
+    """ The dashboard account's persisted UI settings
 
-    Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+     Every setting is always present in the response, each one either an explicitly-stored value or its
+    documented default -- never null or missing.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | UnhealthyStepsList]
+        Response[Error | Settings]
      """
 
 
     kwargs = _get_kwargs(
-        window=window,
-limit=limit,
-offset=offset,
-
+        
     )
 
     response = await client.get_async_httpx_client().request(
@@ -188,31 +148,23 @@ offset=offset,
 async def asyncio(
     *,
     client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
 
-) -> Error | UnhealthyStepsList | None:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Error | Settings | None:
+    """ The dashboard account's persisted UI settings
 
-    Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+     Every setting is always present in the response, each one either an explicitly-stored value or its
+    documented default -- never null or missing.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | UnhealthyStepsList
+        Error | Settings
      """
 
 
     return (await asyncio_detailed(
         client=client,
-window=window,
-limit=limit,
-offset=offset,
 
     )).parsed

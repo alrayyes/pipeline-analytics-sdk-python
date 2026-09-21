@@ -9,7 +9,7 @@ from ...types import Response, UNSET
 from ... import errors
 
 from ...models.error import Error
-from ...models.unhealthy_steps_list import UnhealthyStepsList
+from ...models.web_authn_attestation_response import WebAuthnAttestationResponse
 from ...types import UNSET, Unset
 from typing import cast
 
@@ -17,45 +17,49 @@ from typing import cast
 
 def _get_kwargs(
     *,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
+    body: WebAuthnAttestationResponse,
+    label: str | Unset = UNSET,
 
 ) -> dict[str, Any]:
-    
+    headers: dict[str, Any] = {}
+
 
     
 
     params: dict[str, Any] = {}
 
-    params["window"] = window
-
-    params["limit"] = limit
-
-    params["offset"] = offset
+    params["label"] = label
 
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
 
     _kwargs: dict[str, Any] = {
-        "method": "get",
-        "url": "/api/steps/unhealthy",
+        "method": "post",
+        "url": "/api/auth/credentials",
         "params": params,
     }
 
+    _kwargs["json"] = body.to_dict()
 
+    headers["Content-Type"] = "application/json"
+
+    _kwargs["headers"] = headers
     return _kwargs
 
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | UnhealthyStepsList | None:
-    if response.status_code == 200:
-        response_200 = UnhealthyStepsList.from_dict(response.json())
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Any | Error | None:
+    if response.status_code == 201:
+        response_201 = cast(Any, None)
+        return response_201
+
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
 
 
 
-        return response_200
+        return response_400
 
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
@@ -70,7 +74,7 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
         return None
 
 
-def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error | UnhealthyStepsList]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Any | Error]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -81,32 +85,32 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
+    client: AuthenticatedClient,
+    body: WebAuthnAttestationResponse,
+    label: str | Unset = UNSET,
 
-) -> Response[Error | UnhealthyStepsList]:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Response[Any | Error]:
+    """ Complete the "add another passkey" ceremony
+
+     Session-only, same reasoning as addCredentialOptions.
 
     Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+        label (str | Unset):
+        body (WebAuthnAttestationResponse): The browser's AuthenticatorAttestationResponse, JSON-
+            encoded.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | UnhealthyStepsList]
+        Response[Any | Error]
      """
 
 
     kwargs = _get_kwargs(
-        window=window,
-limit=limit,
-offset=offset,
+        body=body,
+label=label,
 
     )
 
@@ -118,64 +122,64 @@ offset=offset,
 
 def sync(
     *,
-    client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
+    client: AuthenticatedClient,
+    body: WebAuthnAttestationResponse,
+    label: str | Unset = UNSET,
 
-) -> Error | UnhealthyStepsList | None:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Any | Error | None:
+    """ Complete the "add another passkey" ceremony
+
+     Session-only, same reasoning as addCredentialOptions.
 
     Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+        label (str | Unset):
+        body (WebAuthnAttestationResponse): The browser's AuthenticatorAttestationResponse, JSON-
+            encoded.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | UnhealthyStepsList
+        Any | Error
      """
 
 
     return sync_detailed(
         client=client,
-window=window,
-limit=limit,
-offset=offset,
+body=body,
+label=label,
 
     ).parsed
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
+    client: AuthenticatedClient,
+    body: WebAuthnAttestationResponse,
+    label: str | Unset = UNSET,
 
-) -> Response[Error | UnhealthyStepsList]:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Response[Any | Error]:
+    """ Complete the "add another passkey" ceremony
+
+     Session-only, same reasoning as addCredentialOptions.
 
     Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+        label (str | Unset):
+        body (WebAuthnAttestationResponse): The browser's AuthenticatorAttestationResponse, JSON-
+            encoded.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | UnhealthyStepsList]
+        Response[Any | Error]
      """
 
 
     kwargs = _get_kwargs(
-        window=window,
-limit=limit,
-offset=offset,
+        body=body,
+label=label,
 
     )
 
@@ -187,32 +191,32 @@ offset=offset,
 
 async def asyncio(
     *,
-    client: AuthenticatedClient | Client,
-    window: str | Unset = UNSET,
-    limit: int | Unset = UNSET,
-    offset: int | Unset = 0,
+    client: AuthenticatedClient,
+    body: WebAuthnAttestationResponse,
+    label: str | Unset = UNSET,
 
-) -> Error | UnhealthyStepsList | None:
-    """ A page of pipelines with a flaky or failing step, grouped by pipeline
+) -> Any | Error | None:
+    """ Complete the "add another passkey" ceremony
+
+     Session-only, same reasoning as addCredentialOptions.
 
     Args:
-        window (str | Unset):
-        limit (int | Unset):
-        offset (int | Unset):  Default: 0.
+        label (str | Unset):
+        body (WebAuthnAttestationResponse): The browser's AuthenticatorAttestationResponse, JSON-
+            encoded.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | UnhealthyStepsList
+        Any | Error
      """
 
 
     return (await asyncio_detailed(
         client=client,
-window=window,
-limit=limit,
-offset=offset,
+body=body,
+label=label,
 
     )).parsed
