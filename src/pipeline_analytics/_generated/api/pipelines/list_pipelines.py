@@ -20,6 +20,7 @@ def _get_kwargs(
     *,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
 
@@ -37,6 +38,8 @@ def _get_kwargs(
         json_forge = forge.value
 
     params["forge"] = json_forge
+
+    params["window"] = window
 
     params["limit"] = limit
 
@@ -92,6 +95,7 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
 
@@ -101,6 +105,7 @@ def sync_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        window (str | Unset):
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
 
@@ -116,6 +121,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         repo_id=repo_id,
 forge=forge,
+window=window,
 limit=limit,
 offset=offset,
 
@@ -132,6 +138,7 @@ def sync(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
 
@@ -141,6 +148,7 @@ def sync(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        window (str | Unset):
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
 
@@ -157,6 +165,7 @@ def sync(
         client=client,
 repo_id=repo_id,
 forge=forge,
+window=window,
 limit=limit,
 offset=offset,
 
@@ -167,6 +176,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
 
@@ -176,6 +186,7 @@ async def asyncio_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        window (str | Unset):
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
 
@@ -191,6 +202,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         repo_id=repo_id,
 forge=forge,
+window=window,
 limit=limit,
 offset=offset,
 
@@ -207,6 +219,7 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
 
@@ -216,6 +229,7 @@ async def asyncio(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        window (str | Unset):
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
 
@@ -232,6 +246,7 @@ async def asyncio(
         client=client,
 repo_id=repo_id,
 forge=forge,
+window=window,
 limit=limit,
 offset=offset,
 
