@@ -11,6 +11,8 @@ from .github_webhook_body import GithubWebhookBody
 from .health_status import HealthStatus
 from .ingestion_status import IngestionStatus
 from .list_repo_identifiers_response_200 import ListRepoIdentifiersResponse200
+from .mcp_endpoint_body import McpEndpointBody
+from .mcp_endpoint_response_200 import McpEndpointResponse200
 from .pipeline_detail import PipelineDetail
 from .pipeline_list import PipelineList
 from .pipeline_steps_group import PipelineStepsGroup
@@ -63,6 +65,8 @@ __all__ = (
     "HealthStatus",
     "IngestionStatus",
     "ListRepoIdentifiersResponse200",
+    "McpEndpointBody",
+    "McpEndpointResponse200",
     "PipelineDetail",
     "PipelineList",
     "PipelineStepsGroup",
