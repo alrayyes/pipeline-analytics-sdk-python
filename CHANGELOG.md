@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v1.0.1...v1.0.2) (2026-09-26)
+
+
+### Documentation
+
+* add llms.txt for the published docs site ([30e09bc](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/30e09bc1e33e5f56b544f0231cf151f4694c8954))
+* add llms.txt for the published docs site ([35732b1](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/35732b12b6092fcb811dc7f529ebe07f1e4f560c)), closes [#27](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/27)
+
 ## [1.0.1](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v1.0.0...v1.0.1) (2026-09-25)
 
 
