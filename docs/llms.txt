@@ -1,0 +1,15 @@
+# pipeline-analytics-sdk-python
+
+> Python client for pipeline-analytics's REST API, generated from its OpenAPI spec with openapi-python-client. Saves you from hand-rolling HTTP requests, retries and pagination against the API yourself.
+
+Requires Python 3.12+ and a running pipeline-analytics instance. Authentication uses a session cookie (WebAuthn only, no headless token flow), passed to `PipelineAnalyticsClient` or set via `PIPELINE_ANALYTICS_SESSION`.
+
+## Docs
+
+- [Docs home](https://alrayyes.github.io/pipeline-analytics-sdk-python/): overview and a link back to the README for install and quickstart.
+- [API reference](https://alrayyes.github.io/pipeline-analytics-sdk-python/reference/): full reference for `PipelineAnalyticsClient`, `APIError` and `decode_error`, generated from docstrings.
+
+## Project
+
+- [GitHub repository](https://github.com/alrayyes/pipeline-analytics-sdk-python): source, README (install, authentication, usage examples), CONTRIBUTING.
+- [PyPI package](https://pypi.org/project/pipeline-analytics-sdk/): `pip install pipeline-analytics-sdk`.
