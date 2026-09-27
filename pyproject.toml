@@ -62,6 +62,10 @@ overrides = [ { module = "pipeline_analytics._generated.*", ignore_errors = true
 
 [tool.pytest]
 ini_options.testpaths = [ "tests" ]
+ini_options.addopts = "-m 'not contract'"
+ini_options.markers = [
+  "contract: runs against a local Prism mock, needs PIPELINE_ANALYTICS_BASE_URL",
+]
 
 [tool.coverage]
 run.source = [ "src/pipeline_analytics" ]
