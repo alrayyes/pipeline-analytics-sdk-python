@@ -1,6 +1,7 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .api_token import ApiToken
+from .category_count import CategoryCount
 from .credential import Credential
 from .error import Error
 from .failing_pipeline import FailingPipeline
@@ -69,6 +70,7 @@ from .web_authn_request_options import WebAuthnRequestOptions
 
 __all__ = (
     "ApiToken",
+    "CategoryCount",
     "Credential",
     "Error",
     "FailingPipeline",
