@@ -8,6 +8,7 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from ..models.outcome import Outcome
 from ..types import UNSET, Unset
 
 
@@ -25,12 +26,17 @@ class RunStep:
         Attributes:
             name (str):
             status (str):
+            outcome (Outcome): What a run's or step's forge state means, computed by the server so no client interprets
+                status strings. `failed` covers a `failure` or `timed_out` conclusion; a conclusion wins over a stale status;
+                `running` and `queued` are work still pending (the run list's `running` filter covers both); a state the server
+                doesn't recognise is `unknown`, never `passed`.
             conclusion (str | Unset):
             forge_url (str | Unset): Deep link to this exact occurrence's job on the originating forge.
      """
 
     name: str
     status: str
+    outcome: Outcome
     conclusion: str | Unset = UNSET
     forge_url: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -44,6 +50,8 @@ class RunStep:
 
         status = self.status
 
+        outcome = self.outcome.value
+
         conclusion = self.conclusion
 
         forge_url = self.forge_url
@@ -54,6 +62,7 @@ class RunStep:
         field_dict.update({
             "name": name,
             "status": status,
+            "outcome": outcome,
         })
         if conclusion is not UNSET:
             field_dict["conclusion"] = conclusion
@@ -71,6 +80,11 @@ class RunStep:
 
         status = d.pop("status")
 
+        outcome = Outcome(d.pop("outcome"))
+
+
+
+
         conclusion = d.pop("conclusion", UNSET)
 
         forge_url = d.pop("forgeUrl", UNSET)
@@ -78,6 +92,7 @@ class RunStep:
         run_step = cls(
             name=name,
             status=status,
+            outcome=outcome,
             conclusion=conclusion,
             forge_url=forge_url,
         )
