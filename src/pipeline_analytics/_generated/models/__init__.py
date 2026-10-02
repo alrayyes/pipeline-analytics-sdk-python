@@ -3,6 +3,11 @@
 from .api_token import ApiToken
 from .credential import Credential
 from .error import Error
+from .failing_pipeline import FailingPipeline
+from .failure_category import FailureCategory
+from .failure_group import FailureGroup
+from .failure_group_pipelines_item import FailureGroupPipelinesItem
+from .failure_insights import FailureInsights
 from .flaky_run import FlakyRun
 from .forge import Forge
 from .forgejo_webhook_body import ForgejoWebhookBody
@@ -11,6 +16,7 @@ from .github_webhook_body import GithubWebhookBody
 from .health_status import HealthStatus
 from .ingestion_status import IngestionStatus
 from .list_repo_identifiers_response_200 import ListRepoIdentifiersResponse200
+from .list_runs_status import ListRunsStatus
 from .mcp_endpoint_body import McpEndpointBody
 from .mcp_endpoint_response_200 import McpEndpointResponse200
 from .pipeline_detail import PipelineDetail
@@ -24,7 +30,9 @@ from .repo_discovery_request import RepoDiscoveryRequest
 from .repo_list import RepoList
 from .repo_registration import RepoRegistration
 from .run_detail import RunDetail
+from .run_list import RunList
 from .run_step import RunStep
+from .run_summary import RunSummary
 from .settings import Settings
 from .settings_forge_filter import SettingsForgeFilter
 from .settings_pipelines_health_filter import SettingsPipelinesHealthFilter
@@ -43,6 +51,7 @@ from .settings_update_pipelines_sort_order_type_3_type_1 import SettingsUpdatePi
 from .settings_update_theme_type_1 import SettingsUpdateThemeType1
 from .settings_update_theme_type_2_type_1 import SettingsUpdateThemeType2Type1
 from .settings_update_theme_type_3_type_1 import SettingsUpdateThemeType3Type1
+from .stage_failure_count import StageFailureCount
 from .step import Step
 from .trend import Trend
 from .unhealthy_steps_list import UnhealthyStepsList
@@ -57,6 +66,11 @@ __all__ = (
     "ApiToken",
     "Credential",
     "Error",
+    "FailingPipeline",
+    "FailureCategory",
+    "FailureGroup",
+    "FailureGroupPipelinesItem",
+    "FailureInsights",
     "FlakyRun",
     "Forge",
     "ForgejoWebhookBody",
@@ -65,6 +79,7 @@ __all__ = (
     "HealthStatus",
     "IngestionStatus",
     "ListRepoIdentifiersResponse200",
+    "ListRunsStatus",
     "McpEndpointBody",
     "McpEndpointResponse200",
     "PipelineDetail",
@@ -78,7 +93,9 @@ __all__ = (
     "RepoList",
     "RepoRegistration",
     "RunDetail",
+    "RunList",
     "RunStep",
+    "RunSummary",
     "Settings",
     "SettingsForgeFilter",
     "SettingsPipelinesHealthFilter",
@@ -97,6 +114,7 @@ __all__ = (
     "SettingsUpdateThemeType1",
     "SettingsUpdateThemeType2Type1",
     "SettingsUpdateThemeType3Type1",
+    "StageFailureCount",
     "Step",
     "Trend",
     "UnhealthyStepsList",
