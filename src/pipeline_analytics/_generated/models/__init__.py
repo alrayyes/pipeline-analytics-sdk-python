@@ -38,6 +38,7 @@ from .settings import Settings
 from .settings_forge_filter import SettingsForgeFilter
 from .settings_pipelines_health_filter import SettingsPipelinesHealthFilter
 from .settings_pipelines_sort_order import SettingsPipelinesSortOrder
+from .settings_telemetry_window import SettingsTelemetryWindow
 from .settings_theme import SettingsTheme
 from .settings_update import SettingsUpdate
 from .settings_update_forge_filter_type_1 import SettingsUpdateForgeFilterType1
@@ -49,6 +50,9 @@ from .settings_update_pipelines_health_filter_type_3_type_1 import SettingsUpdat
 from .settings_update_pipelines_sort_order_type_1 import SettingsUpdatePipelinesSortOrderType1
 from .settings_update_pipelines_sort_order_type_2_type_1 import SettingsUpdatePipelinesSortOrderType2Type1
 from .settings_update_pipelines_sort_order_type_3_type_1 import SettingsUpdatePipelinesSortOrderType3Type1
+from .settings_update_telemetry_window_type_1 import SettingsUpdateTelemetryWindowType1
+from .settings_update_telemetry_window_type_2_type_1 import SettingsUpdateTelemetryWindowType2Type1
+from .settings_update_telemetry_window_type_3_type_1 import SettingsUpdateTelemetryWindowType3Type1
 from .settings_update_theme_type_1 import SettingsUpdateThemeType1
 from .settings_update_theme_type_2_type_1 import SettingsUpdateThemeType2Type1
 from .settings_update_theme_type_3_type_1 import SettingsUpdateThemeType3Type1
@@ -102,6 +106,7 @@ __all__ = (
     "SettingsForgeFilter",
     "SettingsPipelinesHealthFilter",
     "SettingsPipelinesSortOrder",
+    "SettingsTelemetryWindow",
     "SettingsTheme",
     "SettingsUpdate",
     "SettingsUpdateForgeFilterType1",
@@ -113,6 +118,9 @@ __all__ = (
     "SettingsUpdatePipelinesSortOrderType1",
     "SettingsUpdatePipelinesSortOrderType2Type1",
     "SettingsUpdatePipelinesSortOrderType3Type1",
+    "SettingsUpdateTelemetryWindowType1",
+    "SettingsUpdateTelemetryWindowType2Type1",
+    "SettingsUpdateTelemetryWindowType3Type1",
     "SettingsUpdateThemeType1",
     "SettingsUpdateThemeType2Type1",
     "SettingsUpdateThemeType3Type1",
