@@ -8,6 +8,7 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from ..models.outcome import Outcome
 from ..types import UNSET, Unset
 from typing import cast
 import datetime
@@ -32,6 +33,10 @@ class RunSummary:
             pipeline_name (str):
             repo_id (str):
             status (str): The forge's run status, as recorded.
+            outcome (Outcome): What a run's or step's forge state means, computed by the server so no client interprets
+                status strings. `failed` covers a `failure` or `timed_out` conclusion; a conclusion wins over a stale status;
+                `running` and `queued` are work still pending (the run list's `running` filter covers both); a state the server
+                doesn't recognise is `unknown`, never `passed`.
             steps (list[RunStep]): The run's steps in recorded order.
             conclusion (str | Unset): Absent until the run concludes.
             started_at (datetime.datetime | Unset):
@@ -48,6 +53,7 @@ class RunSummary:
     pipeline_name: str
     repo_id: str
     status: str
+    outcome: Outcome
     steps: list[RunStep]
     conclusion: str | Unset = UNSET
     started_at: datetime.datetime | Unset = UNSET
@@ -74,6 +80,8 @@ class RunSummary:
         repo_id = self.repo_id
 
         status = self.status
+
+        outcome = self.outcome.value
 
         steps = []
         for steps_item_data in self.steps:
@@ -109,6 +117,7 @@ class RunSummary:
             "pipelineName": pipeline_name,
             "repoId": repo_id,
             "status": status,
+            "outcome": outcome,
             "steps": steps,
         })
         if conclusion is not UNSET:
@@ -145,6 +154,11 @@ class RunSummary:
         repo_id = d.pop("repoId")
 
         status = d.pop("status")
+
+        outcome = Outcome(d.pop("outcome"))
+
+
+
 
         steps = []
         _steps = d.pop("steps")
@@ -186,6 +200,7 @@ class RunSummary:
             pipeline_name=pipeline_name,
             repo_id=repo_id,
             status=status,
+            outcome=outcome,
             steps=steps,
             conclusion=conclusion,
             started_at=started_at,
