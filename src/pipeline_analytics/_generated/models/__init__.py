@@ -11,6 +11,7 @@ from .failure_insights import FailureInsights
 from .flaky_run import FlakyRun
 from .forge import Forge
 from .forgejo_webhook_body import ForgejoWebhookBody
+from .get_failure_insights_window import GetFailureInsightsWindow
 from .git_hub_token_usage import GitHubTokenUsage
 from .github_webhook_body import GithubWebhookBody
 from .health_status import HealthStatus
@@ -74,6 +75,7 @@ __all__ = (
     "FlakyRun",
     "Forge",
     "ForgejoWebhookBody",
+    "GetFailureInsightsWindow",
     "GitHubTokenUsage",
     "GithubWebhookBody",
     "HealthStatus",

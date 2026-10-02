@@ -30,11 +30,12 @@ class FailureInsights:
         Attributes:
             total_runs (int):
             failed_runs (int):
-            pass_rate (float): Fraction in [0, 1] of concluded runs that succeeded.
             flaky_step_ratio (float): Fraction in [0, 1] of distinct steps flagged flaky.
             stage_distribution (list[StageFailureCount]): Failures by failing step name, highest first.
             top_failing_pipelines (list[FailingPipeline]): Pipelines ordered by failed runs, highest first.
             failure_groups (list[FailureGroup]): Failed steps grouped by name, highest occurrence count first.
+            pass_rate (float | Unset): Fraction in [0, 1] of concluded runs that succeeded. Absent when no run concluded in
+                the window, since no data isn't 0%.
             pass_rate_delta (float | Unset): Percentage points versus the preceding window of equal length. Absent when that
                 window had no runs.
             mttr_seconds (float | Unset): Mean time from a pipeline's first failed run to its next successful run. Absent
@@ -43,11 +44,11 @@ class FailureInsights:
 
     total_runs: int
     failed_runs: int
-    pass_rate: float
     flaky_step_ratio: float
     stage_distribution: list[StageFailureCount]
     top_failing_pipelines: list[FailingPipeline]
     failure_groups: list[FailureGroup]
+    pass_rate: float | Unset = UNSET
     pass_rate_delta: float | Unset = UNSET
     mttr_seconds: float | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -63,8 +64,6 @@ class FailureInsights:
         total_runs = self.total_runs
 
         failed_runs = self.failed_runs
-
-        pass_rate = self.pass_rate
 
         flaky_step_ratio = self.flaky_step_ratio
 
@@ -89,6 +88,8 @@ class FailureInsights:
 
 
 
+        pass_rate = self.pass_rate
+
         pass_rate_delta = self.pass_rate_delta
 
         mttr_seconds = self.mttr_seconds
@@ -99,12 +100,13 @@ class FailureInsights:
         field_dict.update({
             "totalRuns": total_runs,
             "failedRuns": failed_runs,
-            "passRate": pass_rate,
             "flakyStepRatio": flaky_step_ratio,
             "stageDistribution": stage_distribution,
             "topFailingPipelines": top_failing_pipelines,
             "failureGroups": failure_groups,
         })
+        if pass_rate is not UNSET:
+            field_dict["passRate"] = pass_rate
         if pass_rate_delta is not UNSET:
             field_dict["passRateDelta"] = pass_rate_delta
         if mttr_seconds is not UNSET:
@@ -123,8 +125,6 @@ class FailureInsights:
         total_runs = d.pop("totalRuns")
 
         failed_runs = d.pop("failedRuns")
-
-        pass_rate = d.pop("passRate")
 
         flaky_step_ratio = d.pop("flakyStepRatio")
 
@@ -158,6 +158,8 @@ class FailureInsights:
             failure_groups.append(failure_groups_item)
 
 
+        pass_rate = d.pop("passRate", UNSET)
+
         pass_rate_delta = d.pop("passRateDelta", UNSET)
 
         mttr_seconds = d.pop("mttrSeconds", UNSET)
@@ -165,11 +167,11 @@ class FailureInsights:
         failure_insights = cls(
             total_runs=total_runs,
             failed_runs=failed_runs,
-            pass_rate=pass_rate,
             flaky_step_ratio=flaky_step_ratio,
             stage_distribution=stage_distribution,
             top_failing_pipelines=top_failing_pipelines,
             failure_groups=failure_groups,
+            pass_rate=pass_rate,
             pass_rate_delta=pass_rate_delta,
             mttr_seconds=mttr_seconds,
         )
