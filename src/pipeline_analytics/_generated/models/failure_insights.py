@@ -12,6 +12,7 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
+  from ..models.category_count import CategoryCount
   from ..models.failing_pipeline import FailingPipeline
   from ..models.failure_group import FailureGroup
   from ..models.stage_failure_count import StageFailureCount
@@ -32,6 +33,8 @@ class FailureInsights:
             failed_runs (int):
             flaky_step_ratio (float): Fraction in [0, 1] of distinct steps flagged flaky.
             stage_distribution (list[StageFailureCount]): Failures by failing step name, highest first.
+            category_breakdown (list[CategoryCount]): Failed-step occurrences by failure category, heaviest first. Empty
+                when nothing failed.
             top_failing_pipelines (list[FailingPipeline]): Pipelines ordered by failed runs, highest first.
             failure_groups (list[FailureGroup]): Failed steps grouped by name, highest occurrence count first.
             pass_rate (float | Unset): Fraction in [0, 1] of concluded runs that succeeded. Absent when no run concluded in
@@ -46,6 +49,7 @@ class FailureInsights:
     failed_runs: int
     flaky_step_ratio: float
     stage_distribution: list[StageFailureCount]
+    category_breakdown: list[CategoryCount]
     top_failing_pipelines: list[FailingPipeline]
     failure_groups: list[FailureGroup]
     pass_rate: float | Unset = UNSET
@@ -58,6 +62,7 @@ class FailureInsights:
 
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.category_count import CategoryCount # noqa: PLC0415
         from ..models.failing_pipeline import FailingPipeline # noqa: PLC0415
         from ..models.failure_group import FailureGroup # noqa: PLC0415
         from ..models.stage_failure_count import StageFailureCount # noqa: PLC0415
@@ -71,6 +76,13 @@ class FailureInsights:
         for stage_distribution_item_data in self.stage_distribution:
             stage_distribution_item = stage_distribution_item_data.to_dict()
             stage_distribution.append(stage_distribution_item)
+
+
+
+        category_breakdown = []
+        for category_breakdown_item_data in self.category_breakdown:
+            category_breakdown_item = category_breakdown_item_data.to_dict()
+            category_breakdown.append(category_breakdown_item)
 
 
 
@@ -102,6 +114,7 @@ class FailureInsights:
             "failedRuns": failed_runs,
             "flakyStepRatio": flaky_step_ratio,
             "stageDistribution": stage_distribution,
+            "categoryBreakdown": category_breakdown,
             "topFailingPipelines": top_failing_pipelines,
             "failureGroups": failure_groups,
         })
@@ -118,6 +131,7 @@ class FailureInsights:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.category_count import CategoryCount # noqa: PLC0415
         from ..models.failing_pipeline import FailingPipeline # noqa: PLC0415
         from ..models.failure_group import FailureGroup # noqa: PLC0415
         from ..models.stage_failure_count import StageFailureCount # noqa: PLC0415
@@ -136,6 +150,16 @@ class FailureInsights:
 
 
             stage_distribution.append(stage_distribution_item)
+
+
+        category_breakdown = []
+        _category_breakdown = d.pop("categoryBreakdown")
+        for category_breakdown_item_data in (_category_breakdown):
+            category_breakdown_item = CategoryCount.from_dict(category_breakdown_item_data)
+
+
+
+            category_breakdown.append(category_breakdown_item)
 
 
         top_failing_pipelines = []
@@ -169,6 +193,7 @@ class FailureInsights:
             failed_runs=failed_runs,
             flaky_step_ratio=flaky_step_ratio,
             stage_distribution=stage_distribution,
+            category_breakdown=category_breakdown,
             top_failing_pipelines=top_failing_pipelines,
             failure_groups=failure_groups,
             pass_rate=pass_rate,

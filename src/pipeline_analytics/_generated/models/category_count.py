@@ -8,27 +8,28 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from ..models.failure_category import FailureCategory
 
 
 
 
 
 
-T = TypeVar("T", bound="StageFailureCount")
+T = TypeVar("T", bound="CategoryCount")
 
 
 
 @_attrs_define
-class StageFailureCount:
+class CategoryCount:
     """ 
         Attributes:
-            step (str):
-            failures (int):
-            share (float): Fraction in (0, 1] of all failed-step occurrences in the window; the entries' shares sum to 1.
+            category (FailureCategory):
+            occurrences (int): Failed-step occurrences whose step falls in this category.
+            share (float): Fraction in (0, 1] of all failed-step occurrences in the window; the categories' shares sum to 1.
      """
 
-    step: str
-    failures: int
+    category: FailureCategory
+    occurrences: int
     share: float
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -37,9 +38,9 @@ class StageFailureCount:
 
 
     def to_dict(self) -> dict[str, Any]:
-        step = self.step
+        category = self.category.value
 
-        failures = self.failures
+        occurrences = self.occurrences
 
         share = self.share
 
@@ -47,8 +48,8 @@ class StageFailureCount:
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({
-            "step": step,
-            "failures": failures,
+            "category": category,
+            "occurrences": occurrences,
             "share": share,
         })
 
@@ -59,21 +60,24 @@ class StageFailureCount:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        step = d.pop("step")
+        category = FailureCategory(d.pop("category"))
 
-        failures = d.pop("failures")
+
+
+
+        occurrences = d.pop("occurrences")
 
         share = d.pop("share")
 
-        stage_failure_count = cls(
-            step=step,
-            failures=failures,
+        category_count = cls(
+            category=category,
+            occurrences=occurrences,
             share=share,
         )
 
 
-        stage_failure_count.additional_properties = d
-        return stage_failure_count
+        category_count.additional_properties = d
+        return category_count
 
     @property
     def additional_keys(self) -> list[str]:
