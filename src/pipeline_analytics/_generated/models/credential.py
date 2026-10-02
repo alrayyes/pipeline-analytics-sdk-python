@@ -29,11 +29,15 @@ class Credential:
             label (str): A caller-supplied name (e.g. "MacBook", "iPhone"), set once at enrollment. Empty for a credential
                 added before this existed, or for the account's original anonymous-registration credential.
             created_at (datetime.datetime):
+            revocable (bool): False only for the account's last remaining credential, which DELETE
+                /api/auth/credentials/{credentialId} refuses to revoke (409). A hint for clients so they don't apply the rule
+                themselves; the server still enforces it.
      """
 
     id: str
     label: str
     created_at: datetime.datetime
+    revocable: bool
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -47,6 +51,8 @@ class Credential:
 
         created_at = self.created_at.isoformat()
 
+        revocable = self.revocable
+
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -54,6 +60,7 @@ class Credential:
             "id": id,
             "label": label,
             "createdAt": created_at,
+            "revocable": revocable,
         })
 
         return field_dict
@@ -72,10 +79,13 @@ class Credential:
 
 
 
+        revocable = d.pop("revocable")
+
         credential = cls(
             id=id,
             label=label,
             created_at=created_at,
+            revocable=revocable,
         )
 
 
