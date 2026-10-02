@@ -11,6 +11,7 @@ from ... import errors
 from ...models.error import Error
 from ...models.failure_insights import FailureInsights
 from ...models.forge import Forge
+from ...models.get_failure_insights_window import GetFailureInsightsWindow
 from ...types import UNSET, Unset
 from typing import cast
 
@@ -20,7 +21,7 @@ def _get_kwargs(
     *,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
-    window: str | Unset = UNSET,
+    window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> dict[str, Any]:
     
@@ -37,7 +38,11 @@ def _get_kwargs(
 
     params["forge"] = json_forge
 
-    params["window"] = window
+    json_window: str | Unset = UNSET
+    if not isinstance(window, Unset):
+        json_window = window.value
+
+    params["window"] = json_window
 
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
@@ -89,7 +94,7 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
-    window: str | Unset = UNSET,
+    window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> Response[Error | FailureInsights]:
     """ Failure aggregates over a window -- pass rate, MTTR, failure distribution, root-cause groups
@@ -103,7 +108,7 @@ def sync_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
-        window (str | Unset):
+        window (GetFailureInsightsWindow | Unset):  Default: GetFailureInsightsWindow.VALUE_1.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -132,7 +137,7 @@ def sync(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
-    window: str | Unset = UNSET,
+    window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> Error | FailureInsights | None:
     """ Failure aggregates over a window -- pass rate, MTTR, failure distribution, root-cause groups
@@ -146,7 +151,7 @@ def sync(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
-        window (str | Unset):
+        window (GetFailureInsightsWindow | Unset):  Default: GetFailureInsightsWindow.VALUE_1.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -170,7 +175,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
-    window: str | Unset = UNSET,
+    window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> Response[Error | FailureInsights]:
     """ Failure aggregates over a window -- pass rate, MTTR, failure distribution, root-cause groups
@@ -184,7 +189,7 @@ async def asyncio_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
-        window (str | Unset):
+        window (GetFailureInsightsWindow | Unset):  Default: GetFailureInsightsWindow.VALUE_1.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -213,7 +218,7 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
-    window: str | Unset = UNSET,
+    window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> Error | FailureInsights | None:
     """ Failure aggregates over a window -- pass rate, MTTR, failure distribution, root-cause groups
@@ -227,7 +232,7 @@ async def asyncio(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
-        window (str | Unset):
+        window (GetFailureInsightsWindow | Unset):  Default: GetFailureInsightsWindow.VALUE_1.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
