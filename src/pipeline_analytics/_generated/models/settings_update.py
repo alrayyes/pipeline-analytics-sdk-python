@@ -17,6 +17,9 @@ from ..models.settings_update_pipelines_health_filter_type_3_type_1 import Setti
 from ..models.settings_update_pipelines_sort_order_type_1 import SettingsUpdatePipelinesSortOrderType1
 from ..models.settings_update_pipelines_sort_order_type_2_type_1 import SettingsUpdatePipelinesSortOrderType2Type1
 from ..models.settings_update_pipelines_sort_order_type_3_type_1 import SettingsUpdatePipelinesSortOrderType3Type1
+from ..models.settings_update_telemetry_window_type_1 import SettingsUpdateTelemetryWindowType1
+from ..models.settings_update_telemetry_window_type_2_type_1 import SettingsUpdateTelemetryWindowType2Type1
+from ..models.settings_update_telemetry_window_type_3_type_1 import SettingsUpdateTelemetryWindowType3Type1
 from ..models.settings_update_theme_type_1 import SettingsUpdateThemeType1
 from ..models.settings_update_theme_type_2_type_1 import SettingsUpdateThemeType2Type1
 from ..models.settings_update_theme_type_3_type_1 import SettingsUpdateThemeType3Type1
@@ -46,6 +49,8 @@ class SettingsUpdate:
             pipelines_repo_selector (None | str | Unset):
             pipelines_sort_order (None | SettingsUpdatePipelinesSortOrderType1 | SettingsUpdatePipelinesSortOrderType2Type1
                 | SettingsUpdatePipelinesSortOrderType3Type1 | Unset):
+            telemetry_window (None | SettingsUpdateTelemetryWindowType1 | SettingsUpdateTelemetryWindowType2Type1 |
+                SettingsUpdateTelemetryWindowType3Type1 | Unset):
      """
 
     theme: None | SettingsUpdateThemeType1 | SettingsUpdateThemeType2Type1 | SettingsUpdateThemeType3Type1 | Unset = UNSET
@@ -53,6 +58,7 @@ class SettingsUpdate:
     pipelines_health_filter: None | SettingsUpdatePipelinesHealthFilterType1 | SettingsUpdatePipelinesHealthFilterType2Type1 | SettingsUpdatePipelinesHealthFilterType3Type1 | Unset = UNSET
     pipelines_repo_selector: None | str | Unset = UNSET
     pipelines_sort_order: None | SettingsUpdatePipelinesSortOrderType1 | SettingsUpdatePipelinesSortOrderType2Type1 | SettingsUpdatePipelinesSortOrderType3Type1 | Unset = UNSET
+    telemetry_window: None | SettingsUpdateTelemetryWindowType1 | SettingsUpdateTelemetryWindowType2Type1 | SettingsUpdateTelemetryWindowType3Type1 | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -114,6 +120,18 @@ class SettingsUpdate:
         else:
             pipelines_sort_order = self.pipelines_sort_order
 
+        telemetry_window: None | str | Unset
+        if isinstance(self.telemetry_window, Unset):
+            telemetry_window = UNSET
+        elif isinstance(self.telemetry_window, SettingsUpdateTelemetryWindowType1):
+            telemetry_window = self.telemetry_window.value
+        elif isinstance(self.telemetry_window, SettingsUpdateTelemetryWindowType2Type1):
+            telemetry_window = self.telemetry_window.value
+        elif isinstance(self.telemetry_window, SettingsUpdateTelemetryWindowType3Type1):
+            telemetry_window = self.telemetry_window.value
+        else:
+            telemetry_window = self.telemetry_window
+
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -129,6 +147,8 @@ class SettingsUpdate:
             field_dict["pipelinesRepoSelector"] = pipelines_repo_selector
         if pipelines_sort_order is not UNSET:
             field_dict["pipelinesSortOrder"] = pipelines_sort_order
+        if telemetry_window is not UNSET:
+            field_dict["telemetryWindow"] = telemetry_window
 
         return field_dict
 
@@ -307,12 +327,53 @@ class SettingsUpdate:
         pipelines_sort_order = _parse_pipelines_sort_order(d.pop("pipelinesSortOrder", UNSET))
 
 
+        def _parse_telemetry_window(data: object) -> None | SettingsUpdateTelemetryWindowType1 | SettingsUpdateTelemetryWindowType2Type1 | SettingsUpdateTelemetryWindowType3Type1 | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                telemetry_window_type_1 = SettingsUpdateTelemetryWindowType1(data)
+
+
+
+                return telemetry_window_type_1
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                telemetry_window_type_2_type_1 = SettingsUpdateTelemetryWindowType2Type1(data)
+
+
+
+                return telemetry_window_type_2_type_1
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                telemetry_window_type_3_type_1 = SettingsUpdateTelemetryWindowType3Type1(data)
+
+
+
+                return telemetry_window_type_3_type_1
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(None | SettingsUpdateTelemetryWindowType1 | SettingsUpdateTelemetryWindowType2Type1 | SettingsUpdateTelemetryWindowType3Type1 | Unset, data)
+
+        telemetry_window = _parse_telemetry_window(d.pop("telemetryWindow", UNSET))
+
+
         settings_update = cls(
             theme=theme,
             forge_filter=forge_filter,
             pipelines_health_filter=pipelines_health_filter,
             pipelines_repo_selector=pipelines_repo_selector,
             pipelines_sort_order=pipelines_sort_order,
+            telemetry_window=telemetry_window,
         )
 
 

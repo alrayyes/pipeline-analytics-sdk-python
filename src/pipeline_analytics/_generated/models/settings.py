@@ -11,6 +11,7 @@ from ..types import UNSET, Unset
 from ..models.settings_forge_filter import SettingsForgeFilter
 from ..models.settings_pipelines_health_filter import SettingsPipelinesHealthFilter
 from ..models.settings_pipelines_sort_order import SettingsPipelinesSortOrder
+from ..models.settings_telemetry_window import SettingsTelemetryWindow
 from ..models.settings_theme import SettingsTheme
 
 
@@ -32,6 +33,8 @@ class Settings:
             pipelines_repo_selector (str): A tracked repo's id, or "all" for every repo -- not validated against an enum,
                 since the set of valid values changes with what's currently tracked.
             pipelines_sort_order (SettingsPipelinesSortOrder):
+            telemetry_window (SettingsTelemetryWindow): The trailing span the failure overview, root-cause and flaky views
+                cover. Defaults to 7d.
      """
 
     theme: SettingsTheme
@@ -39,6 +42,7 @@ class Settings:
     pipelines_health_filter: SettingsPipelinesHealthFilter
     pipelines_repo_selector: str
     pipelines_sort_order: SettingsPipelinesSortOrder
+    telemetry_window: SettingsTelemetryWindow
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -56,6 +60,8 @@ class Settings:
 
         pipelines_sort_order = self.pipelines_sort_order.value
 
+        telemetry_window = self.telemetry_window.value
+
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -65,6 +71,7 @@ class Settings:
             "pipelinesHealthFilter": pipelines_health_filter,
             "pipelinesRepoSelector": pipelines_repo_selector,
             "pipelinesSortOrder": pipelines_sort_order,
+            "telemetryWindow": telemetry_window,
         })
 
         return field_dict
@@ -96,12 +103,18 @@ class Settings:
 
 
 
+        telemetry_window = SettingsTelemetryWindow(d.pop("telemetryWindow"))
+
+
+
+
         settings = cls(
             theme=theme,
             forge_filter=forge_filter,
             pipelines_health_filter=pipelines_health_filter,
             pipelines_repo_selector=pipelines_repo_selector,
             pipelines_sort_order=pipelines_sort_order,
+            telemetry_window=telemetry_window,
         )
 
 
