@@ -17,6 +17,7 @@ from .git_hub_token_usage import GitHubTokenUsage
 from .github_webhook_body import GithubWebhookBody
 from .health_status import HealthStatus
 from .ingestion_status import IngestionStatus
+from .list_pipelines_sort import ListPipelinesSort
 from .list_repo_identifiers_response_200 import ListRepoIdentifiersResponse200
 from .list_runs_status import ListRunsStatus
 from .mcp_endpoint_body import McpEndpointBody
@@ -87,6 +88,7 @@ __all__ = (
     "GithubWebhookBody",
     "HealthStatus",
     "IngestionStatus",
+    "ListPipelinesSort",
     "ListRepoIdentifiersResponse200",
     "ListRunsStatus",
     "McpEndpointBody",

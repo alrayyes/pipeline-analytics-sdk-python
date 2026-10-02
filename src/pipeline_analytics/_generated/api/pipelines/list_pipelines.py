@@ -10,6 +10,8 @@ from ... import errors
 
 from ...models.error import Error
 from ...models.forge import Forge
+from ...models.health_status import HealthStatus
+from ...models.list_pipelines_sort import ListPipelinesSort
 from ...models.pipeline_list import PipelineList
 from ...types import UNSET, Unset
 from typing import cast
@@ -20,6 +22,8 @@ def _get_kwargs(
     *,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    health: HealthStatus | Unset = UNSET,
+    sort: ListPipelinesSort | Unset = ListPipelinesSort.NAME,
     window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -38,6 +42,18 @@ def _get_kwargs(
         json_forge = forge.value
 
     params["forge"] = json_forge
+
+    json_health: str | Unset = UNSET
+    if not isinstance(health, Unset):
+        json_health = health.value
+
+    params["health"] = json_health
+
+    json_sort: str | Unset = UNSET
+    if not isinstance(sort, Unset):
+        json_sort = sort.value
+
+    params["sort"] = json_sort
 
     params["window"] = window
 
@@ -68,6 +84,13 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
         return response_200
 
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+
+
+        return response_400
+
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
@@ -95,6 +118,8 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    health: HealthStatus | Unset = UNSET,
+    sort: ListPipelinesSort | Unset = ListPipelinesSort.NAME,
     window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -105,6 +130,8 @@ def sync_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        health (HealthStatus | Unset):
+        sort (ListPipelinesSort | Unset):  Default: ListPipelinesSort.NAME.
         window (str | Unset):
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
@@ -121,6 +148,8 @@ def sync_detailed(
     kwargs = _get_kwargs(
         repo_id=repo_id,
 forge=forge,
+health=health,
+sort=sort,
 window=window,
 limit=limit,
 offset=offset,
@@ -138,6 +167,8 @@ def sync(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    health: HealthStatus | Unset = UNSET,
+    sort: ListPipelinesSort | Unset = ListPipelinesSort.NAME,
     window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -148,6 +179,8 @@ def sync(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        health (HealthStatus | Unset):
+        sort (ListPipelinesSort | Unset):  Default: ListPipelinesSort.NAME.
         window (str | Unset):
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
@@ -165,6 +198,8 @@ def sync(
         client=client,
 repo_id=repo_id,
 forge=forge,
+health=health,
+sort=sort,
 window=window,
 limit=limit,
 offset=offset,
@@ -176,6 +211,8 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    health: HealthStatus | Unset = UNSET,
+    sort: ListPipelinesSort | Unset = ListPipelinesSort.NAME,
     window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -186,6 +223,8 @@ async def asyncio_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        health (HealthStatus | Unset):
+        sort (ListPipelinesSort | Unset):  Default: ListPipelinesSort.NAME.
         window (str | Unset):
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
@@ -202,6 +241,8 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         repo_id=repo_id,
 forge=forge,
+health=health,
+sort=sort,
 window=window,
 limit=limit,
 offset=offset,
@@ -219,6 +260,8 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    health: HealthStatus | Unset = UNSET,
+    sort: ListPipelinesSort | Unset = ListPipelinesSort.NAME,
     window: str | Unset = UNSET,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -229,6 +272,8 @@ async def asyncio(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        health (HealthStatus | Unset):
+        sort (ListPipelinesSort | Unset):  Default: ListPipelinesSort.NAME.
         window (str | Unset):
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
@@ -246,6 +291,8 @@ async def asyncio(
         client=client,
 repo_id=repo_id,
 forge=forge,
+health=health,
+sort=sort,
 window=window,
 limit=limit,
 offset=offset,
