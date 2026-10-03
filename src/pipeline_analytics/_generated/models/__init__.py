@@ -9,6 +9,7 @@ from .failure_category import FailureCategory
 from .failure_group import FailureGroup
 from .failure_group_pipelines_item import FailureGroupPipelinesItem
 from .failure_insights import FailureInsights
+from .failure_insights_window import FailureInsightsWindow
 from .flaky_run import FlakyRun
 from .forge import Forge
 from .forgejo_webhook_body import ForgejoWebhookBody
@@ -80,6 +81,7 @@ __all__ = (
     "FailureGroup",
     "FailureGroupPipelinesItem",
     "FailureInsights",
+    "FailureInsightsWindow",
     "FlakyRun",
     "Forge",
     "ForgejoWebhookBody",
