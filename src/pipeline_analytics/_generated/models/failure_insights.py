@@ -8,6 +8,7 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from ..models.failure_insights_window import FailureInsightsWindow
 from ..types import UNSET, Unset
 from typing import cast
 
@@ -29,6 +30,8 @@ T = TypeVar("T", bound="FailureInsights")
 class FailureInsights:
     """ 
         Attributes:
+            window (FailureInsightsWindow): The window these figures cover: the requested one, or the server's default when
+                the request named none or an unknown one. Clients show this rather than assuming a default.
             total_runs (int):
             failed_runs (int):
             flaky_step_ratio (float): Fraction in [0, 1] of distinct steps flagged flaky.
@@ -45,6 +48,7 @@ class FailureInsights:
                 when nothing recovered in the window.
      """
 
+    window: FailureInsightsWindow
     total_runs: int
     failed_runs: int
     flaky_step_ratio: float
@@ -66,6 +70,8 @@ class FailureInsights:
         from ..models.failing_pipeline import FailingPipeline # noqa: PLC0415
         from ..models.failure_group import FailureGroup # noqa: PLC0415
         from ..models.stage_failure_count import StageFailureCount # noqa: PLC0415
+        window = self.window.value
+
         total_runs = self.total_runs
 
         failed_runs = self.failed_runs
@@ -110,6 +116,7 @@ class FailureInsights:
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({
+            "window": window,
             "totalRuns": total_runs,
             "failedRuns": failed_runs,
             "flakyStepRatio": flaky_step_ratio,
@@ -136,6 +143,11 @@ class FailureInsights:
         from ..models.failure_group import FailureGroup # noqa: PLC0415
         from ..models.stage_failure_count import StageFailureCount # noqa: PLC0415
         d = dict(src_dict)
+        window = FailureInsightsWindow(d.pop("window"))
+
+
+
+
         total_runs = d.pop("totalRuns")
 
         failed_runs = d.pop("failedRuns")
@@ -189,6 +201,7 @@ class FailureInsights:
         mttr_seconds = d.pop("mttrSeconds", UNSET)
 
         failure_insights = cls(
+            window=window,
             total_runs=total_runs,
             failed_runs=failed_runs,
             flaky_step_ratio=flaky_step_ratio,
