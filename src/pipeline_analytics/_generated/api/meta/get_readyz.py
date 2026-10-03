@@ -67,8 +67,11 @@ def sync_detailed(
     """ Readiness -- the instance can serve, its database answers
 
      Public and unauthenticated, for the container's `HEALTHCHECK` and any orchestrator. Reads the
-    database schema within a short deadline. A failure returns 503 with a generic body: the cause goes
-    to the server log, not to an unauthenticated caller.
+    database schema within a short deadline and reuses the result for a few seconds, so polling can't
+    hammer the database. A failure returns 503 with a generic body: the cause goes to the server log,
+    not to an unauthenticated caller. After SIGTERM it returns 503 without checking, while the server
+    keeps serving for its drain period, so a router takes the instance out of rotation before the
+    listener closes.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -97,8 +100,11 @@ def sync(
     """ Readiness -- the instance can serve, its database answers
 
      Public and unauthenticated, for the container's `HEALTHCHECK` and any orchestrator. Reads the
-    database schema within a short deadline. A failure returns 503 with a generic body: the cause goes
-    to the server log, not to an unauthenticated caller.
+    database schema within a short deadline and reuses the result for a few seconds, so polling can't
+    hammer the database. A failure returns 503 with a generic body: the cause goes to the server log,
+    not to an unauthenticated caller. After SIGTERM it returns 503 without checking, while the server
+    keeps serving for its drain period, so a router takes the instance out of rotation before the
+    listener closes.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -122,8 +128,11 @@ async def asyncio_detailed(
     """ Readiness -- the instance can serve, its database answers
 
      Public and unauthenticated, for the container's `HEALTHCHECK` and any orchestrator. Reads the
-    database schema within a short deadline. A failure returns 503 with a generic body: the cause goes
-    to the server log, not to an unauthenticated caller.
+    database schema within a short deadline and reuses the result for a few seconds, so polling can't
+    hammer the database. A failure returns 503 with a generic body: the cause goes to the server log,
+    not to an unauthenticated caller. After SIGTERM it returns 503 without checking, while the server
+    keeps serving for its drain period, so a router takes the instance out of rotation before the
+    listener closes.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -152,8 +161,11 @@ async def asyncio(
     """ Readiness -- the instance can serve, its database answers
 
      Public and unauthenticated, for the container's `HEALTHCHECK` and any orchestrator. Reads the
-    database schema within a short deadline. A failure returns 503 with a generic body: the cause goes
-    to the server log, not to an unauthenticated caller.
+    database schema within a short deadline and reuses the result for a few seconds, so polling can't
+    hammer the database. A failure returns 503 with a generic body: the cause goes to the server log,
+    not to an unauthenticated caller. After SIGTERM it returns 503 without checking, while the server
+    keeps serving for its drain period, so a router takes the instance out of rotation before the
+    listener closes.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
