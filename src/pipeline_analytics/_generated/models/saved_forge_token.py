@@ -16,23 +16,24 @@ from ..types import UNSET, Unset
 
 
 
-T = TypeVar("T", bound="RepoDiscoveryRequest")
+T = TypeVar("T", bound="SavedForgeToken")
 
 
 
 @_attrs_define
-class RepoDiscoveryRequest:
+class SavedForgeToken:
     """ 
         Attributes:
+            id (str):
             forge (Forge):
-            forgejo_instance_url (str | Unset):
-            token (str | Unset): Never stored by this call -- used for this one lookup only. Omitted uses the token saved
-                for this forge and instance; a `400` with code `no_saved_token` when there is none.
+            token_masked (str): Last four characters only, e.g. "****1234". The token is never returned.
+            forgejo_instance_url (str | Unset): Set for Forgejo, absent for GitHub.
      """
 
+    id: str
     forge: Forge
+    token_masked: str
     forgejo_instance_url: str | Unset = UNSET
-    token: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -40,22 +41,24 @@ class RepoDiscoveryRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
+        id = self.id
+
         forge = self.forge.value
 
-        forgejo_instance_url = self.forgejo_instance_url
+        token_masked = self.token_masked
 
-        token = self.token
+        forgejo_instance_url = self.forgejo_instance_url
 
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({
+            "id": id,
             "forge": forge,
+            "tokenMasked": token_masked,
         })
         if forgejo_instance_url is not UNSET:
             field_dict["forgejoInstanceUrl"] = forgejo_instance_url
-        if token is not UNSET:
-            field_dict["token"] = token
 
         return field_dict
 
@@ -64,24 +67,27 @@ class RepoDiscoveryRequest:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
+        id = d.pop("id")
+
         forge = Forge(d.pop("forge"))
 
 
 
 
+        token_masked = d.pop("tokenMasked")
+
         forgejo_instance_url = d.pop("forgejoInstanceUrl", UNSET)
 
-        token = d.pop("token", UNSET)
-
-        repo_discovery_request = cls(
+        saved_forge_token = cls(
+            id=id,
             forge=forge,
+            token_masked=token_masked,
             forgejo_instance_url=forgejo_instance_url,
-            token=token,
         )
 
 
-        repo_discovery_request.additional_properties = d
-        return repo_discovery_request
+        saved_forge_token.additional_properties = d
+        return saved_forge_token
 
     @property
     def additional_keys(self) -> list[str]:
