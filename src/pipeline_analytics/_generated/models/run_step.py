@@ -30,6 +30,7 @@ class RunStep:
                 status strings. `failed` covers a `failure` or `timed_out` conclusion; a conclusion wins over a stale status;
                 `running` and `queued` are work still pending (the run list's `running` filter covers both); a state the server
                 doesn't recognise is `unknown`, never `passed`.
+            job_id (str | Unset): The job this step ran in; pass it to GET /api/runs/{runId}/jobs/{jobId}/log.
             conclusion (str | Unset):
             forge_url (str | Unset): Deep link to this exact occurrence's job on the originating forge.
      """
@@ -37,6 +38,7 @@ class RunStep:
     name: str
     status: str
     outcome: Outcome
+    job_id: str | Unset = UNSET
     conclusion: str | Unset = UNSET
     forge_url: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -52,6 +54,8 @@ class RunStep:
 
         outcome = self.outcome.value
 
+        job_id = self.job_id
+
         conclusion = self.conclusion
 
         forge_url = self.forge_url
@@ -64,6 +68,8 @@ class RunStep:
             "status": status,
             "outcome": outcome,
         })
+        if job_id is not UNSET:
+            field_dict["jobId"] = job_id
         if conclusion is not UNSET:
             field_dict["conclusion"] = conclusion
         if forge_url is not UNSET:
@@ -85,6 +91,8 @@ class RunStep:
 
 
 
+        job_id = d.pop("jobId", UNSET)
+
         conclusion = d.pop("conclusion", UNSET)
 
         forge_url = d.pop("forgeUrl", UNSET)
@@ -93,6 +101,7 @@ class RunStep:
             name=name,
             status=status,
             outcome=outcome,
+            job_id=job_id,
             conclusion=conclusion,
             forge_url=forge_url,
         )
