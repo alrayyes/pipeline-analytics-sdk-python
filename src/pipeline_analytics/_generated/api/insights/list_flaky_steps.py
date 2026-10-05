@@ -21,6 +21,7 @@ def _get_kwargs(
     *,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: ListFlakyStepsWindow | Unset = ListFlakyStepsWindow.VALUE_1,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -39,6 +40,8 @@ def _get_kwargs(
         json_forge = forge.value
 
     params["forge"] = json_forge
+
+    params["branch"] = branch
 
     json_window: str | Unset = UNSET
     if not isinstance(window, Unset):
@@ -73,6 +76,13 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
         return response_200
 
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+
+
+        return response_400
+
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
@@ -100,6 +110,7 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: ListFlakyStepsWindow | Unset = ListFlakyStepsWindow.VALUE_1,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -116,6 +127,7 @@ def sync_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        branch (str | Unset):
         window (ListFlakyStepsWindow | Unset):  Default: ListFlakyStepsWindow.VALUE_1.
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
@@ -132,6 +144,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         repo_id=repo_id,
 forge=forge,
+branch=branch,
 window=window,
 limit=limit,
 offset=offset,
@@ -149,6 +162,7 @@ def sync(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: ListFlakyStepsWindow | Unset = ListFlakyStepsWindow.VALUE_1,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -165,6 +179,7 @@ def sync(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        branch (str | Unset):
         window (ListFlakyStepsWindow | Unset):  Default: ListFlakyStepsWindow.VALUE_1.
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
@@ -182,6 +197,7 @@ def sync(
         client=client,
 repo_id=repo_id,
 forge=forge,
+branch=branch,
 window=window,
 limit=limit,
 offset=offset,
@@ -193,6 +209,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: ListFlakyStepsWindow | Unset = ListFlakyStepsWindow.VALUE_1,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -209,6 +226,7 @@ async def asyncio_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        branch (str | Unset):
         window (ListFlakyStepsWindow | Unset):  Default: ListFlakyStepsWindow.VALUE_1.
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
@@ -225,6 +243,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         repo_id=repo_id,
 forge=forge,
+branch=branch,
 window=window,
 limit=limit,
 offset=offset,
@@ -242,6 +261,7 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: ListFlakyStepsWindow | Unset = ListFlakyStepsWindow.VALUE_1,
     limit: int | Unset = UNSET,
     offset: int | Unset = 0,
@@ -258,6 +278,7 @@ async def asyncio(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        branch (str | Unset):
         window (ListFlakyStepsWindow | Unset):  Default: ListFlakyStepsWindow.VALUE_1.
         limit (int | Unset):
         offset (int | Unset):  Default: 0.
@@ -275,6 +296,7 @@ async def asyncio(
         client=client,
 repo_id=repo_id,
 forge=forge,
+branch=branch,
 window=window,
 limit=limit,
 offset=offset,
