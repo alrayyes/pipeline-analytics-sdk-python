@@ -1,6 +1,9 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .api_token import ApiToken
+from .branch_entry import BranchEntry
+from .branch_list import BranchList
+from .branch_list_window import BranchListWindow
 from .category_count import CategoryCount
 from .credential import Credential
 from .error import Error
@@ -23,6 +26,7 @@ from .health_status import HealthStatus
 from .ingestion_status import IngestionStatus
 from .job_log import JobLog
 from .job_log_reason import JobLogReason
+from .list_branches_window import ListBranchesWindow
 from .list_flaky_steps_window import ListFlakyStepsWindow
 from .list_pipelines_sort import ListPipelinesSort
 from .list_repo_identifiers_response_200 import ListRepoIdentifiersResponse200
@@ -80,6 +84,9 @@ from .web_authn_request_options import WebAuthnRequestOptions
 
 __all__ = (
     "ApiToken",
+    "BranchEntry",
+    "BranchList",
+    "BranchListWindow",
     "CategoryCount",
     "Credential",
     "Error",
@@ -102,6 +109,7 @@ __all__ = (
     "IngestionStatus",
     "JobLog",
     "JobLogReason",
+    "ListBranchesWindow",
     "ListFlakyStepsWindow",
     "ListPipelinesSort",
     "ListRepoIdentifiersResponse200",
