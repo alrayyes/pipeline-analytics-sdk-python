@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-class SettingsTelemetryWindow(StrEnum):
+class SettingsValuesTelemetryWindow(StrEnum):
     VALUE_0 = "24h"
     VALUE_1 = "7d"
     VALUE_2 = "30d"

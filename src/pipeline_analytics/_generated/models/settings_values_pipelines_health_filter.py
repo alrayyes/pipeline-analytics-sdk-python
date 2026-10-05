@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-class SettingsPipelinesHealthFilter(StrEnum):
+class SettingsValuesPipelinesHealthFilter(StrEnum):
     ALL = "all"
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
