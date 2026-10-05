@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.11](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v2.0.10...v2.0.11) (2026-10-05)
+
+
+### Bug Fixes
+
+* regenerate client from updated pipeline-analytics spec ([#61](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/61)) ([f3cebb9](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/f3cebb9d958066ad36147c88dff985a90dbb032e))
+
 ## [2.0.10](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v2.0.9...v2.0.10) (2026-10-03)
 
 
