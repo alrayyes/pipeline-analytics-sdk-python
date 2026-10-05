@@ -21,6 +21,7 @@ def _get_kwargs(
     *,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> dict[str, Any]:
@@ -37,6 +38,8 @@ def _get_kwargs(
         json_forge = forge.value
 
     params["forge"] = json_forge
+
+    params["branch"] = branch
 
     json_window: str | Unset = UNSET
     if not isinstance(window, Unset):
@@ -67,6 +70,13 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
         return response_200
 
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+
+
+        return response_400
+
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
@@ -94,6 +104,7 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> Response[Error | FailureInsights]:
@@ -108,6 +119,7 @@ def sync_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        branch (str | Unset):
         window (GetFailureInsightsWindow | Unset):  Default: GetFailureInsightsWindow.VALUE_1.
 
     Raises:
@@ -122,6 +134,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         repo_id=repo_id,
 forge=forge,
+branch=branch,
 window=window,
 
     )
@@ -137,6 +150,7 @@ def sync(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> Error | FailureInsights | None:
@@ -151,6 +165,7 @@ def sync(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        branch (str | Unset):
         window (GetFailureInsightsWindow | Unset):  Default: GetFailureInsightsWindow.VALUE_1.
 
     Raises:
@@ -166,6 +181,7 @@ def sync(
         client=client,
 repo_id=repo_id,
 forge=forge,
+branch=branch,
 window=window,
 
     ).parsed
@@ -175,6 +191,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> Response[Error | FailureInsights]:
@@ -189,6 +206,7 @@ async def asyncio_detailed(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        branch (str | Unset):
         window (GetFailureInsightsWindow | Unset):  Default: GetFailureInsightsWindow.VALUE_1.
 
     Raises:
@@ -203,6 +221,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         repo_id=repo_id,
 forge=forge,
+branch=branch,
 window=window,
 
     )
@@ -218,6 +237,7 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     repo_id: str | Unset = UNSET,
     forge: Forge | Unset = UNSET,
+    branch: str | Unset = UNSET,
     window: GetFailureInsightsWindow | Unset = GetFailureInsightsWindow.VALUE_1,
 
 ) -> Error | FailureInsights | None:
@@ -232,6 +252,7 @@ async def asyncio(
     Args:
         repo_id (str | Unset):
         forge (Forge | Unset):
+        branch (str | Unset):
         window (GetFailureInsightsWindow | Unset):  Default: GetFailureInsightsWindow.VALUE_1.
 
     Raises:
@@ -247,6 +268,7 @@ async def asyncio(
         client=client,
 repo_id=repo_id,
 forge=forge,
+branch=branch,
 window=window,
 
     )).parsed
