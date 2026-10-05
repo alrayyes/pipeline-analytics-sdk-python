@@ -21,6 +21,8 @@ from .git_hub_token_usage import GitHubTokenUsage
 from .github_webhook_body import GithubWebhookBody
 from .health_status import HealthStatus
 from .ingestion_status import IngestionStatus
+from .job_log import JobLog
+from .job_log_reason import JobLogReason
 from .list_flaky_steps_window import ListFlakyStepsWindow
 from .list_pipelines_sort import ListPipelinesSort
 from .list_repo_identifiers_response_200 import ListRepoIdentifiersResponse200
@@ -97,6 +99,8 @@ __all__ = (
     "GithubWebhookBody",
     "HealthStatus",
     "IngestionStatus",
+    "JobLog",
+    "JobLogReason",
     "ListFlakyStepsWindow",
     "ListPipelinesSort",
     "ListRepoIdentifiersResponse200",
