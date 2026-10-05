@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-class SettingsForgeFilter(StrEnum):
+class SettingsValuesForgeFilter(StrEnum):
     ALL = "all"
     FORGEJO = "forgejo"
     GITHUB = "github"

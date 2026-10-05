@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-class SettingsPipelinesSortOrder(StrEnum):
+class SettingsValuesPipelinesSortOrder(StrEnum):
     LASTRUN = "lastRun"
     NAME = "name"
 

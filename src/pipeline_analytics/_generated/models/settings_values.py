@@ -13,24 +13,19 @@ from ..models.settings_values_pipelines_health_filter import SettingsValuesPipel
 from ..models.settings_values_pipelines_sort_order import SettingsValuesPipelinesSortOrder
 from ..models.settings_values_telemetry_window import SettingsValuesTelemetryWindow
 from ..models.settings_values_theme import SettingsValuesTheme
-from typing import cast
-
-if TYPE_CHECKING:
-  from ..models.settings_values import SettingsValues
 
 
 
 
 
-T = TypeVar("T", bound="Settings")
+
+T = TypeVar("T", bound="SettingsValues")
 
 
 
 @_attrs_define
-class Settings:
-    """ Every setting in force, plus `defaults`: the server's documented default for each, so a client can tell whether a
-    value is the default without keeping its own copy.
-
+class SettingsValues:
+    """ 
         Attributes:
             theme (SettingsValuesTheme):
             forge_filter (SettingsValuesForgeFilter):
@@ -40,7 +35,6 @@ class Settings:
             pipelines_sort_order (SettingsValuesPipelinesSortOrder):
             telemetry_window (SettingsValuesTelemetryWindow): The trailing span the failure overview, root-cause and flaky
                 views cover. Defaults to 7d.
-            defaults (SettingsValues):
      """
 
     theme: SettingsValuesTheme
@@ -49,7 +43,6 @@ class Settings:
     pipelines_repo_selector: str
     pipelines_sort_order: SettingsValuesPipelinesSortOrder
     telemetry_window: SettingsValuesTelemetryWindow
-    defaults: SettingsValues
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -57,7 +50,6 @@ class Settings:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.settings_values import SettingsValues # noqa: PLC0415
         theme = self.theme.value
 
         forge_filter = self.forge_filter.value
@@ -70,8 +62,6 @@ class Settings:
 
         telemetry_window = self.telemetry_window.value
 
-        defaults = self.defaults.to_dict()
-
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -82,7 +72,6 @@ class Settings:
             "pipelinesRepoSelector": pipelines_repo_selector,
             "pipelinesSortOrder": pipelines_sort_order,
             "telemetryWindow": telemetry_window,
-            "defaults": defaults,
         })
 
         return field_dict
@@ -91,7 +80,6 @@ class Settings:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.settings_values import SettingsValues # noqa: PLC0415
         d = dict(src_dict)
         theme = SettingsValuesTheme(d.pop("theme"))
 
@@ -120,24 +108,18 @@ class Settings:
 
 
 
-        defaults = SettingsValues.from_dict(d.pop("defaults"))
-
-
-
-
-        settings = cls(
+        settings_values = cls(
             theme=theme,
             forge_filter=forge_filter,
             pipelines_health_filter=pipelines_health_filter,
             pipelines_repo_selector=pipelines_repo_selector,
             pipelines_sort_order=pipelines_sort_order,
             telemetry_window=telemetry_window,
-            defaults=defaults,
         )
 
 
-        settings.additional_properties = d
-        return settings
+        settings_values.additional_properties = d
+        return settings_values
 
     @property
     def additional_keys(self) -> list[str]:

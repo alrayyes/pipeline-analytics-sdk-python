@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-class SettingsTheme(StrEnum):
+class SettingsValuesTheme(StrEnum):
     DARK = "dark"
     LIGHT = "light"
     SYSTEM = "system"

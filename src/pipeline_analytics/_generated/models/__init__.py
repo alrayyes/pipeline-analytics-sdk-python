@@ -45,11 +45,6 @@ from .run_list import RunList
 from .run_step import RunStep
 from .run_summary import RunSummary
 from .settings import Settings
-from .settings_forge_filter import SettingsForgeFilter
-from .settings_pipelines_health_filter import SettingsPipelinesHealthFilter
-from .settings_pipelines_sort_order import SettingsPipelinesSortOrder
-from .settings_telemetry_window import SettingsTelemetryWindow
-from .settings_theme import SettingsTheme
 from .settings_update import SettingsUpdate
 from .settings_update_forge_filter_type_1 import SettingsUpdateForgeFilterType1
 from .settings_update_forge_filter_type_2_type_1 import SettingsUpdateForgeFilterType2Type1
@@ -66,6 +61,12 @@ from .settings_update_telemetry_window_type_3_type_1 import SettingsUpdateTeleme
 from .settings_update_theme_type_1 import SettingsUpdateThemeType1
 from .settings_update_theme_type_2_type_1 import SettingsUpdateThemeType2Type1
 from .settings_update_theme_type_3_type_1 import SettingsUpdateThemeType3Type1
+from .settings_values import SettingsValues
+from .settings_values_forge_filter import SettingsValuesForgeFilter
+from .settings_values_pipelines_health_filter import SettingsValuesPipelinesHealthFilter
+from .settings_values_pipelines_sort_order import SettingsValuesPipelinesSortOrder
+from .settings_values_telemetry_window import SettingsValuesTelemetryWindow
+from .settings_values_theme import SettingsValuesTheme
 from .stage_failure_count import StageFailureCount
 from .step import Step
 from .trend import Trend
@@ -123,11 +124,6 @@ __all__ = (
     "RunStep",
     "RunSummary",
     "Settings",
-    "SettingsForgeFilter",
-    "SettingsPipelinesHealthFilter",
-    "SettingsPipelinesSortOrder",
-    "SettingsTelemetryWindow",
-    "SettingsTheme",
     "SettingsUpdate",
     "SettingsUpdateForgeFilterType1",
     "SettingsUpdateForgeFilterType2Type1",
@@ -144,6 +140,12 @@ __all__ = (
     "SettingsUpdateThemeType1",
     "SettingsUpdateThemeType2Type1",
     "SettingsUpdateThemeType3Type1",
+    "SettingsValues",
+    "SettingsValuesForgeFilter",
+    "SettingsValuesPipelinesHealthFilter",
+    "SettingsValuesPipelinesSortOrder",
+    "SettingsValuesTelemetryWindow",
+    "SettingsValuesTheme",
     "StageFailureCount",
     "Step",
     "Trend",
