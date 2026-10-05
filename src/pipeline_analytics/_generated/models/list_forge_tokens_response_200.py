@@ -8,31 +8,27 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..models.forge import Forge
-from ..types import UNSET, Unset
+from typing import cast
+
+if TYPE_CHECKING:
+  from ..models.saved_forge_token import SavedForgeToken
 
 
 
 
 
-
-T = TypeVar("T", bound="RepoDiscoveryRequest")
+T = TypeVar("T", bound="ListForgeTokensResponse200")
 
 
 
 @_attrs_define
-class RepoDiscoveryRequest:
+class ListForgeTokensResponse200:
     """ 
         Attributes:
-            forge (Forge):
-            forgejo_instance_url (str | Unset):
-            token (str | Unset): Never stored by this call -- used for this one lookup only. Omitted uses the token saved
-                for this forge and instance; a `400` with code `no_saved_token` when there is none.
+            tokens (list[SavedForgeToken]):
      """
 
-    forge: Forge
-    forgejo_instance_url: str | Unset = UNSET
-    token: str | Unset = UNSET
+    tokens: list[SavedForgeToken]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -40,22 +36,20 @@ class RepoDiscoveryRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        forge = self.forge.value
+        from ..models.saved_forge_token import SavedForgeToken # noqa: PLC0415
+        tokens = []
+        for tokens_item_data in self.tokens:
+            tokens_item = tokens_item_data.to_dict()
+            tokens.append(tokens_item)
 
-        forgejo_instance_url = self.forgejo_instance_url
 
-        token = self.token
 
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({
-            "forge": forge,
+            "tokens": tokens,
         })
-        if forgejo_instance_url is not UNSET:
-            field_dict["forgejoInstanceUrl"] = forgejo_instance_url
-        if token is not UNSET:
-            field_dict["token"] = token
 
         return field_dict
 
@@ -63,25 +57,25 @@ class RepoDiscoveryRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.saved_forge_token import SavedForgeToken # noqa: PLC0415
         d = dict(src_dict)
-        forge = Forge(d.pop("forge"))
+        tokens = []
+        _tokens = d.pop("tokens")
+        for tokens_item_data in (_tokens):
+            tokens_item = SavedForgeToken.from_dict(tokens_item_data)
 
 
 
+            tokens.append(tokens_item)
 
-        forgejo_instance_url = d.pop("forgejoInstanceUrl", UNSET)
 
-        token = d.pop("token", UNSET)
-
-        repo_discovery_request = cls(
-            forge=forge,
-            forgejo_instance_url=forgejo_instance_url,
-            token=token,
+        list_forge_tokens_response_200 = cls(
+            tokens=tokens,
         )
 
 
-        repo_discovery_request.additional_properties = d
-        return repo_discovery_request
+        list_forge_tokens_response_200.additional_properties = d
+        return list_forge_tokens_response_200
 
     @property
     def additional_keys(self) -> list[str]:

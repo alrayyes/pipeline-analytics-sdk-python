@@ -16,23 +16,22 @@ from ..types import UNSET, Unset
 
 
 
-T = TypeVar("T", bound="RepoDiscoveryRequest")
+T = TypeVar("T", bound="SaveForgeTokenRequest")
 
 
 
 @_attrs_define
-class RepoDiscoveryRequest:
+class SaveForgeTokenRequest:
     """ 
         Attributes:
             forge (Forge):
+            token (str):
             forgejo_instance_url (str | Unset):
-            token (str | Unset): Never stored by this call -- used for this one lookup only. Omitted uses the token saved
-                for this forge and instance; a `400` with code `no_saved_token` when there is none.
      """
 
     forge: Forge
+    token: str
     forgejo_instance_url: str | Unset = UNSET
-    token: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -42,20 +41,19 @@ class RepoDiscoveryRequest:
     def to_dict(self) -> dict[str, Any]:
         forge = self.forge.value
 
-        forgejo_instance_url = self.forgejo_instance_url
-
         token = self.token
+
+        forgejo_instance_url = self.forgejo_instance_url
 
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({
             "forge": forge,
+            "token": token,
         })
         if forgejo_instance_url is not UNSET:
             field_dict["forgejoInstanceUrl"] = forgejo_instance_url
-        if token is not UNSET:
-            field_dict["token"] = token
 
         return field_dict
 
@@ -69,19 +67,19 @@ class RepoDiscoveryRequest:
 
 
 
+        token = d.pop("token")
+
         forgejo_instance_url = d.pop("forgejoInstanceUrl", UNSET)
 
-        token = d.pop("token", UNSET)
-
-        repo_discovery_request = cls(
+        save_forge_token_request = cls(
             forge=forge,
-            forgejo_instance_url=forgejo_instance_url,
             token=token,
+            forgejo_instance_url=forgejo_instance_url,
         )
 
 
-        repo_discovery_request.additional_properties = d
-        return repo_discovery_request
+        save_forge_token_request.additional_properties = d
+        return save_forge_token_request
 
     @property
     def additional_keys(self) -> list[str]:

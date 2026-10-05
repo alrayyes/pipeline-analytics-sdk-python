@@ -26,14 +26,15 @@ class RepoRegistration:
         Attributes:
             forge (Forge):
             identifier (str):
-            token (str): Repo-scoped personal access token. Never echoed back.
             forgejo_instance_url (str | Unset):
+            token (str | Unset): Repo-scoped personal access token. Never echoed back. Omitted uses the token saved for this
+                forge and instance; a `400` with code `no_saved_token` when there is none.
      """
 
     forge: Forge
     identifier: str
-    token: str
     forgejo_instance_url: str | Unset = UNSET
+    token: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -45,9 +46,9 @@ class RepoRegistration:
 
         identifier = self.identifier
 
-        token = self.token
-
         forgejo_instance_url = self.forgejo_instance_url
+
+        token = self.token
 
 
         field_dict: dict[str, Any] = {}
@@ -55,10 +56,11 @@ class RepoRegistration:
         field_dict.update({
             "forge": forge,
             "identifier": identifier,
-            "token": token,
         })
         if forgejo_instance_url is not UNSET:
             field_dict["forgejoInstanceUrl"] = forgejo_instance_url
+        if token is not UNSET:
+            field_dict["token"] = token
 
         return field_dict
 
@@ -74,15 +76,15 @@ class RepoRegistration:
 
         identifier = d.pop("identifier")
 
-        token = d.pop("token")
-
         forgejo_instance_url = d.pop("forgejoInstanceUrl", UNSET)
+
+        token = d.pop("token", UNSET)
 
         repo_registration = cls(
             forge=forge,
             identifier=identifier,
-            token=token,
             forgejo_instance_url=forgejo_instance_url,
+            token=token,
         )
 
 

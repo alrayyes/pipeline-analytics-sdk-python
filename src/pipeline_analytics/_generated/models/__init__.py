@@ -28,6 +28,7 @@ from .job_log import JobLog
 from .job_log_reason import JobLogReason
 from .list_branches_window import ListBranchesWindow
 from .list_flaky_steps_window import ListFlakyStepsWindow
+from .list_forge_tokens_response_200 import ListForgeTokensResponse200
 from .list_pipelines_sort import ListPipelinesSort
 from .list_repo_identifiers_response_200 import ListRepoIdentifiersResponse200
 from .list_runs_status import ListRunsStatus
@@ -48,6 +49,8 @@ from .run_detail import RunDetail
 from .run_list import RunList
 from .run_step import RunStep
 from .run_summary import RunSummary
+from .save_forge_token_request import SaveForgeTokenRequest
+from .saved_forge_token import SavedForgeToken
 from .settings import Settings
 from .settings_update import SettingsUpdate
 from .settings_update_forge_filter_type_1 import SettingsUpdateForgeFilterType1
@@ -111,6 +114,7 @@ __all__ = (
     "JobLogReason",
     "ListBranchesWindow",
     "ListFlakyStepsWindow",
+    "ListForgeTokensResponse200",
     "ListPipelinesSort",
     "ListRepoIdentifiersResponse200",
     "ListRunsStatus",
@@ -131,6 +135,8 @@ __all__ = (
     "RunList",
     "RunStep",
     "RunSummary",
+    "SavedForgeToken",
+    "SaveForgeTokenRequest",
     "Settings",
     "SettingsUpdate",
     "SettingsUpdateForgeFilterType1",
