@@ -9,6 +9,7 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 from ..models.outcome import Outcome
+from ..models.run_summary_actions_item import RunSummaryActionsItem
 from ..types import UNSET, Unset
 from typing import cast
 import datetime
@@ -37,6 +38,10 @@ class RunSummary:
                 status strings. `failed` covers a `failure` or `timed_out` conclusion; a conclusion wins over a stale status;
                 `running` and `queued` are work still pending (the run list's `running` filter covers both); a state the server
                 doesn't recognise is `unknown`, never `passed`.
+            actions (list[RunSummaryActionsItem]): What a session may ask the forge to do to this run now: `rerun` for a
+                concluded GitHub run, `cancel` for a queued or running one. Empty when neither applies, and always empty for a
+                Forgejo run. The same rule decides the `409 not_actionable` and `501 unsupported` answers of `POST
+                /api/runs/{runId}/rerun` and `/cancel`, which stay session-only whoever reads this list.
             steps (list[RunStep]): The run's steps in recorded order.
             conclusion (str | Unset): Absent until the run concludes.
             started_at (datetime.datetime | Unset):
@@ -54,6 +59,7 @@ class RunSummary:
     repo_id: str
     status: str
     outcome: Outcome
+    actions: list[RunSummaryActionsItem]
     steps: list[RunStep]
     conclusion: str | Unset = UNSET
     started_at: datetime.datetime | Unset = UNSET
@@ -82,6 +88,13 @@ class RunSummary:
         status = self.status
 
         outcome = self.outcome.value
+
+        actions = []
+        for actions_item_data in self.actions:
+            actions_item = actions_item_data.value
+            actions.append(actions_item)
+
+
 
         steps = []
         for steps_item_data in self.steps:
@@ -118,6 +131,7 @@ class RunSummary:
             "repoId": repo_id,
             "status": status,
             "outcome": outcome,
+            "actions": actions,
             "steps": steps,
         })
         if conclusion is not UNSET:
@@ -158,6 +172,16 @@ class RunSummary:
         outcome = Outcome(d.pop("outcome"))
 
 
+
+
+        actions = []
+        _actions = d.pop("actions")
+        for actions_item_data in (_actions):
+            actions_item = RunSummaryActionsItem(actions_item_data)
+
+
+
+            actions.append(actions_item)
 
 
         steps = []
@@ -201,6 +225,7 @@ class RunSummary:
             repo_id=repo_id,
             status=status,
             outcome=outcome,
+            actions=actions,
             steps=steps,
             conclusion=conclusion,
             started_at=started_at,
