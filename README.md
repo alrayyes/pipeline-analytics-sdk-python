@@ -32,9 +32,8 @@ than tracking the latest release in anything but a quick trial.
 
 pipeline-analytics authenticates browsers with
 [WebAuthn](https://webauthn.guide/), not an API token — there's no headless
-credential-grant flow in its spec (a real token flow is requested in
-[alrayyes/pipeline-analytics#178](https://github.com/alrayyes/pipeline-analytics/issues/178)),
-so this SDK can't log in for you. Get a session cookie by logging into the
+credential-grant flow in its spec (a token flow is a known gap on the server
+side), so this SDK can't log in for you. Get a session cookie by logging into the
 dashboard in a browser, opening dev tools, and copying the `session`
 cookie's value. Pass it to `PipelineAnalyticsClient` or set
 `PIPELINE_ANALYTICS_SESSION` in the environment:
