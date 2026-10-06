@@ -4,7 +4,7 @@
 [![PyPI](https://img.shields.io/pypi/v/pipeline-analytics-sdk.svg)](https://pypi.org/project/pipeline-analytics-sdk/)
 [![Codecov](https://codecov.io/gh/alrayyes/pipeline-analytics-sdk-python/graph/badge.svg)](https://codecov.io/gh/alrayyes/pipeline-analytics-sdk-python)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://alrayyes.github.io/pipeline-analytics-sdk-python/)
+[![docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://apis.ryankes.eu/pipeline-analytics-sdk-python/docs/)
 
 A Python client for [pipeline-analytics](https://github.com/alrayyes/pipeline-analytics)'s
 REST API, generated from its OpenAPI spec with
@@ -110,6 +110,13 @@ jitter (honoring a server-sent `Retry-After`), and never retries any other
 `4xx`. Tune it by passing a `pipeline_analytics.RetryConfig` as `retry=`, or
 swap the underlying `httpx.Client`/`httpx.AsyncClient` entirely with
 `httpx_client=`/`httpx_async_client=`.
+
+## Reports
+
+The last green run on `main` publishes its test and coverage reports at
+[apis.ryankes.eu/pipeline-analytics-sdk-python/reports/](https://apis.ryankes.eu/pipeline-analytics-sdk-python/reports/):
+JUnit XML under `tests/`, and an HTML report plus Cobertura
+`coverage.xml` under `coverage/`. A red test run publishes nothing.
 
 ## Regenerating the client
 
