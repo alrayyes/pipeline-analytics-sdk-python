@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.4](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.3...v3.0.4) (2026-10-06)
+
+
+### Documentation
+
+* keep ticket references out of public docs ([76da5e3](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/76da5e3ab88af6ba0d005f3e024aefb315c9c289))
+* state why there is no token flow instead of citing a ticket ([60ae1ac](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/60ae1ac6db5cbfa20f72129d4b5e364dfd209976))
+
 ## [3.0.3](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.2...v3.0.3) (2026-10-05)
 
 
