@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.6](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.5...v3.0.6) (2026-10-08)
+
+
+### Bug Fixes
+
+* Bump mypy from 2.3.1 to 2.4.0 ([#85](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/85)) ([07dad8a](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/07dad8a3138cf05812aceb441b2086f297dd5ccd))
+* Bump ruff from 0.16.9 to 0.16.10 ([#84](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/84)) ([7a7ef4f](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/7a7ef4fa17e075eaf1e5db9512c425bef2cbf773))
+
 ## [3.0.5](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.4...v3.0.5) (2026-10-06)
 
 
