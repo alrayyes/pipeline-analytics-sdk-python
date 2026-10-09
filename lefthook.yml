@@ -3,13 +3,16 @@ pre-commit:
   commands:
     ruff-format:
       glob: "*.py"
-      run: uv run ruff format {staged_files} && git add {staged_files}
+      run: uv run ruff format {staged_files}
+      stage_fixed: true
     ruff-fix:
       glob: "*.py"
-      run: uv run ruff check --fix {staged_files} && git add {staged_files}
+      run: uv run ruff check --fix {staged_files}
+      stage_fixed: true
     pyproject-fmt:
       glob: "pyproject.toml"
-      run: uvx pyproject-fmt==2.29.4 --keep-full-version {staged_files} && git add {staged_files}
+      run: uvx pyproject-fmt==2.29.4 --keep-full-version {staged_files}
+      stage_fixed: true
 
 commit-msg:
   commands:
