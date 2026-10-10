@@ -9,7 +9,10 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 from ..types import UNSET, Unset
+from typing import cast
 
+if TYPE_CHECKING:
+  from ..models.quarantine import Quarantine
 
 
 
@@ -31,6 +34,9 @@ class Step:
             failure_rate (float):
             failure_count (int): Times this step failed within the window.
             flaky (bool):
+            quarantined (bool): True when a person has marked this step as known. It is still `flaky`; it just stops making
+                its pipeline unhealthy.
+            quarantine (Quarantine | Unset): A person's mark on a flaky step. Present only while it is in force.
             forge_url (str | Unset): Deep link to one occurrence's log on the originating forge -- not necessarily one where
                 the step failed. GET .../flaky-runs is the reliable way to reach a run the step actually failed on.
      """
@@ -43,6 +49,8 @@ class Step:
     failure_rate: float
     failure_count: int
     flaky: bool
+    quarantined: bool
+    quarantine: Quarantine | Unset = UNSET
     forge_url: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -51,6 +59,7 @@ class Step:
 
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.quarantine import Quarantine # noqa: PLC0415
         id = self.id
 
         name = self.name
@@ -67,6 +76,12 @@ class Step:
 
         flaky = self.flaky
 
+        quarantined = self.quarantined
+
+        quarantine: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.quarantine, Unset):
+            quarantine = self.quarantine.to_dict()
+
         forge_url = self.forge_url
 
 
@@ -81,7 +96,10 @@ class Step:
             "failureRate": failure_rate,
             "failureCount": failure_count,
             "flaky": flaky,
+            "quarantined": quarantined,
         })
+        if quarantine is not UNSET:
+            field_dict["quarantine"] = quarantine
         if forge_url is not UNSET:
             field_dict["forgeUrl"] = forge_url
 
@@ -91,6 +109,7 @@ class Step:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.quarantine import Quarantine # noqa: PLC0415
         d = dict(src_dict)
         id = d.pop("id")
 
@@ -108,6 +127,18 @@ class Step:
 
         flaky = d.pop("flaky")
 
+        quarantined = d.pop("quarantined")
+
+        _quarantine = d.pop("quarantine", UNSET)
+        quarantine: Quarantine | Unset
+        if isinstance(_quarantine,  Unset):
+            quarantine = UNSET
+        else:
+            quarantine = Quarantine.from_dict(_quarantine)
+
+
+
+
         forge_url = d.pop("forgeUrl", UNSET)
 
         step = cls(
@@ -119,6 +150,8 @@ class Step:
             failure_rate=failure_rate,
             failure_count=failure_count,
             flaky=flaky,
+            quarantined=quarantined,
+            quarantine=quarantine,
             forge_url=forge_url,
         )
 
