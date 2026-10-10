@@ -24,6 +24,7 @@ from .git_hub_token_usage import GitHubTokenUsage
 from .github_webhook_body import GithubWebhookBody
 from .health_status import HealthStatus
 from .ingestion_status import IngestionStatus
+from .issue_api_token_request import IssueApiTokenRequest
 from .job_log import JobLog
 from .job_log_reason import JobLogReason
 from .list_branches_window import ListBranchesWindow
@@ -114,6 +115,7 @@ __all__ = (
     "GithubWebhookBody",
     "HealthStatus",
     "IngestionStatus",
+    "IssueApiTokenRequest",
     "JobLog",
     "JobLogReason",
     "ListBranchesWindow",
