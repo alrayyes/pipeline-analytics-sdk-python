@@ -40,6 +40,8 @@ from .pipeline_list import PipelineList
 from .pipeline_steps_group import PipelineStepsGroup
 from .pipeline_summary import PipelineSummary
 from .pipeline_summary_triggered_signals_item import PipelineSummaryTriggeredSignalsItem
+from .quarantine import Quarantine
+from .quarantine_request import QuarantineRequest
 from .rate_limit_status import RateLimitStatus
 from .repo import Repo
 from .repo_discovery_request import RepoDiscoveryRequest
@@ -77,6 +79,7 @@ from .settings_values_telemetry_window import SettingsValuesTelemetryWindow
 from .settings_values_theme import SettingsValuesTheme
 from .stage_failure_count import StageFailureCount
 from .step import Step
+from .step_quarantine import StepQuarantine
 from .trend import Trend
 from .unhealthy_steps_list import UnhealthyStepsList
 from .usage_entry import UsageEntry
@@ -127,6 +130,8 @@ __all__ = (
     "PipelineStepsGroup",
     "PipelineSummary",
     "PipelineSummaryTriggeredSignalsItem",
+    "Quarantine",
+    "QuarantineRequest",
     "RateLimitStatus",
     "Repo",
     "RepoDiscoveryRequest",
@@ -164,6 +169,7 @@ __all__ = (
     "SettingsValuesTheme",
     "StageFailureCount",
     "Step",
+    "StepQuarantine",
     "Trend",
     "UnhealthyStepsList",
     "UsageEntry",
