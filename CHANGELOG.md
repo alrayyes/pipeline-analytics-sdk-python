@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.0.10](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.9...v3.0.10) (2026-10-15)
+
+
+### Bug Fixes
+
+* Bump mkdocstrings[python] from 1.0.6 to 1.0.7 ([#99](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/99)) ([f3d3ea8](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/f3d3ea8f6393f7654820f2e4689b8dc7dc8d6c47))
+* Bump ruff from 0.16.10 to 0.17.0 ([#100](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/100)) ([f1e0b2a](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/f1e0b2a576deebacb9caa5f495fff41cdabcb3a9))
+* regenerate client from updated pipeline-analytics spec ([#101](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/101)) ([d7cd830](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/d7cd830be51d437fdd2d7284679d9e2bda64b51b))
+
 ## [3.0.9](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.8...v3.0.9) (2026-10-15)
 
 
