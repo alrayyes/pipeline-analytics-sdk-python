@@ -100,12 +100,13 @@ def sync_detailed(
 ) -> Response[Error | StepQuarantine]:
     """ Mark a flaky step as known, so it stops making its pipeline unhealthy
 
-     Session-only: an API token or an MCP client can read a quarantine but not set one. A quarantined
-    step stays in the flaky list with its figures unchanged, but no longer raises the pipeline's
-    `flaky_step` health signal or counts in the flaky-step ratio. The mark lasts 30 days from now;
-    marking a step that is already quarantined renews it and replaces its note. It is recorded in this
-    service only: no forge is contacted. The step isn't checked to be flaky, so a mark on a step that
-    isn't does nothing until it is.
+     Session-only: an API token can read a quarantine but not set one. The `quarantine_step` MCP tool and
+    the WebMCP tool act for a signed-in session only, and refuse an API token the same way. A
+    quarantined step stays in the flaky list with its figures unchanged, but no longer raises the
+    pipeline's `flaky_step` health signal or counts in the flaky-step ratio. The mark lasts 30 days from
+    now; marking a step that is already quarantined renews it and replaces its note. It is recorded in
+    this service only: no forge is contacted. The step isn't checked to be flaky, so a mark on a step
+    that isn't does nothing until it is.
 
     Args:
         pipeline_id (str):
@@ -144,12 +145,13 @@ def sync(
 ) -> Error | StepQuarantine | None:
     """ Mark a flaky step as known, so it stops making its pipeline unhealthy
 
-     Session-only: an API token or an MCP client can read a quarantine but not set one. A quarantined
-    step stays in the flaky list with its figures unchanged, but no longer raises the pipeline's
-    `flaky_step` health signal or counts in the flaky-step ratio. The mark lasts 30 days from now;
-    marking a step that is already quarantined renews it and replaces its note. It is recorded in this
-    service only: no forge is contacted. The step isn't checked to be flaky, so a mark on a step that
-    isn't does nothing until it is.
+     Session-only: an API token can read a quarantine but not set one. The `quarantine_step` MCP tool and
+    the WebMCP tool act for a signed-in session only, and refuse an API token the same way. A
+    quarantined step stays in the flaky list with its figures unchanged, but no longer raises the
+    pipeline's `flaky_step` health signal or counts in the flaky-step ratio. The mark lasts 30 days from
+    now; marking a step that is already quarantined renews it and replaces its note. It is recorded in
+    this service only: no forge is contacted. The step isn't checked to be flaky, so a mark on a step
+    that isn't does nothing until it is.
 
     Args:
         pipeline_id (str):
@@ -183,12 +185,13 @@ async def asyncio_detailed(
 ) -> Response[Error | StepQuarantine]:
     """ Mark a flaky step as known, so it stops making its pipeline unhealthy
 
-     Session-only: an API token or an MCP client can read a quarantine but not set one. A quarantined
-    step stays in the flaky list with its figures unchanged, but no longer raises the pipeline's
-    `flaky_step` health signal or counts in the flaky-step ratio. The mark lasts 30 days from now;
-    marking a step that is already quarantined renews it and replaces its note. It is recorded in this
-    service only: no forge is contacted. The step isn't checked to be flaky, so a mark on a step that
-    isn't does nothing until it is.
+     Session-only: an API token can read a quarantine but not set one. The `quarantine_step` MCP tool and
+    the WebMCP tool act for a signed-in session only, and refuse an API token the same way. A
+    quarantined step stays in the flaky list with its figures unchanged, but no longer raises the
+    pipeline's `flaky_step` health signal or counts in the flaky-step ratio. The mark lasts 30 days from
+    now; marking a step that is already quarantined renews it and replaces its note. It is recorded in
+    this service only: no forge is contacted. The step isn't checked to be flaky, so a mark on a step
+    that isn't does nothing until it is.
 
     Args:
         pipeline_id (str):
@@ -227,12 +230,13 @@ async def asyncio(
 ) -> Error | StepQuarantine | None:
     """ Mark a flaky step as known, so it stops making its pipeline unhealthy
 
-     Session-only: an API token or an MCP client can read a quarantine but not set one. A quarantined
-    step stays in the flaky list with its figures unchanged, but no longer raises the pipeline's
-    `flaky_step` health signal or counts in the flaky-step ratio. The mark lasts 30 days from now;
-    marking a step that is already quarantined renews it and replaces its note. It is recorded in this
-    service only: no forge is contacted. The step isn't checked to be flaky, so a mark on a step that
-    isn't does nothing until it is.
+     Session-only: an API token can read a quarantine but not set one. The `quarantine_step` MCP tool and
+    the WebMCP tool act for a signed-in session only, and refuse an API token the same way. A
+    quarantined step stays in the flaky list with its figures unchanged, but no longer raises the
+    pipeline's `flaky_step` health signal or counts in the flaky-step ratio. The mark lasts 30 days from
+    now; marking a step that is already quarantined renews it and replaces its note. It is recorded in
+    this service only: no forge is contacted. The step isn't checked to be flaky, so a mark on a step
+    that isn't does nothing until it is.
 
     Args:
         pipeline_id (str):
