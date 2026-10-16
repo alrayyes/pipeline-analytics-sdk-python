@@ -25,6 +25,16 @@ uv run mutmut run
 type check, tests) before every push; mutation testing runs in CI, not the
 hook, since a full `mutmut run` is too slow for every push.
 
+Two jobs share the dependency audit, both through
+[advisory-scan](https://github.com/alrayyes/advisory-scan). The `audit` job
+runs on a pull request that changes `pyproject.toml` or `uv.lock`,
+audits the head and the base, and fails only on advisories the pull request
+adds. So an advisory published overnight doesn't turn unrelated pull requests
+red. `advisory-scan.yml` audits `main` daily, on every push that changes those
+files, and on demand, and keeps one open issue titled "Dependency advisories".
+It closes that issue when the audit is clean. There's no ignore list: an
+advisory with no fix stays in that issue until one ships.
+
 ## Docs and reports
 
 The API reference is built with mkdocs from the docstrings, and the test and
