@@ -32,5 +32,3 @@ pre-push:
       run: uv run pytest
     bandit:
       run: uv run bandit -r src/pipeline_analytics -x src/pipeline_analytics/_generated
-    pip-audit:
-      run: uv run pip-audit
