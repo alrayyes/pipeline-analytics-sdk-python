@@ -1236,7 +1236,7 @@ wheels = [
 
 [[package]]
 name = "pipeline-analytics-sdk"
-version = "3.0.12"
+version = "3.0.13"
 source = { editable = "." }
 dependencies = [
     { name = "attrs" },
