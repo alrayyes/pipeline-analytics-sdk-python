@@ -7,6 +7,8 @@
 - [lefthook](https://github.com/evilmartians/lefthook) and
   [bun](https://bun.sh) (for commitlint). `bun install` then
   `lefthook install` once, after cloning.
+- [gitleaks](https://github.com/gitleaks/gitleaks) on your `PATH`. It scans
+  for secrets in the pre-commit and pre-push hooks and in CI.
 
 ## Building and testing
 
@@ -22,7 +24,7 @@ uv run mutmut run
 ```
 
 `lefthook run pre-push` runs the fast subset of the above (format, lint,
-type check, tests) before every push; mutation testing runs in CI, not the
+type check, tests) and a gitleaks scan of the whole history before every push; mutation testing runs in CI, not the
 hook, since a full `mutmut run` is too slow for every push.
 
 Two jobs share the dependency audit, both through
