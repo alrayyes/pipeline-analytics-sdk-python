@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.16](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.15...v3.0.16) (2026-11-05)
+
+
+### Bug Fixes
+
+* Bump hatchling from 1.32.4 to 1.33.0 ([#131](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/131)) ([89b3c3a](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/89b3c3a5f104cae7069f3901e9d6c526c4e36a9f))
+* Bump mkdocs-material from 9.7.7 to 9.8.0 ([#129](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/129)) ([41f15f3](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/41f15f3db6a8bcf3808d71253515333a79590eb0))
+* Bump mkdocstrings[python] from 1.0.7 to 1.0.8 ([#127](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/127)) ([059952a](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/059952a18f10320a3b11df5d09ad09121e65cae1))
+* Bump mutmut from 3.8.0 to 3.8.1 ([#136](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/136)) ([3e7c16a](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/3e7c16a0aa59919e99c0fbac8f00624e5dba41f3))
+* Bump mypy from 2.4.0 to 2.4.1 ([#135](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/135)) ([edde463](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/edde46383ee9c4d23c742a2baff9a3575500515b))
+* Bump pytest from 9.1.1 to 9.2.0 ([#133](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/133)) ([693034d](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/693034d6f968464d1fa31bd4e021cc3a1206454a))
+* Bump ruff from 0.17.1 to 0.17.2 ([#125](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/125)) ([87003c5](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/87003c59ff5c2ed71527dc71f30a98128ddfc050))
+* Bump ruff from 0.17.2 to 0.17.3 ([#134](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/134)) ([ea49d01](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/ea49d011b033bfe0b8cba06b89737d4410533300))
+* Bump the uv group across 1 directory with 3 updates ([#130](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/130)) ([0022bcf](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/0022bcfc8253dbbc860174927654ffac5bccb4f8))
+* keep the mutation job working on pytest 9.2 ([#138](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/138)) ([ea4d638](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/ea4d638feb4cedfea0dc09a0ebd0c4aa0d8e48fb))
+
 ## [3.0.15](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.14...v3.0.15) (2026-10-26)
 
 
