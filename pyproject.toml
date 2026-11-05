@@ -24,7 +24,7 @@ urls.Issues = "https://github.com/alrayyes/pipeline-analytics-sdk-python/issues"
 [dependency-groups]
 dev = [
   "bandit==1.9.4",
-  "mutmut==3.8.0",
+  "mutmut==3.8.1",
   "mypy==2.4.1",
   "openapi-python-client==0.29.1",
   "pip-audit==2.10.1",
