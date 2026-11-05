@@ -163,7 +163,13 @@ jobs:
       - run: uv sync --locked --all-groups
       - name: mutmut
         run: |
-          uv run mutmut run || true
+          uv run mutmut run | tee mutmut.log || true
+          # A crash before any mutant ran leaves them all "not checked", which
+          # `results` would report as survivors and hide the real error above.
+          if ! grep -q "mutations/second" mutmut.log; then
+            echo "mutmut never ran its mutants - see the runner error above." >&2
+            exit 1
+          fi
           survivors="$(uv run mutmut results)"
           if [ -n "$survivors" ]; then
             echo "$survivors"
