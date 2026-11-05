@@ -8,4 +8,4 @@ or the mutation job dies in its stats run before mutating anything.
 import pytest
 
 if not hasattr(pytest.Item, "_nodeid"):
-    pytest.Item._nodeid = property(lambda self: self.nodeid)  # type: ignore[attr-defined]
+    pytest.Item._nodeid = property(lambda self: self.nodeid)  # type: ignore[attr-defined,assignment,unused-ignore]
