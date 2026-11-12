@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.0.0](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.16...v4.0.0) (2026-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* the client is built on httpx2. A caller that passes its own httpx_client or httpx_async_client must pass an httpx2.Client or httpx2.AsyncClient.
+
+### Features
+
+* move the SDK to httpx2 with openapi-python-client 0.30 ([#145](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/145)) ([80a53c0](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/80a53c0e2e188f7b845aef26eb3dd0a38ab86884))
+
+
+### Bug Fixes
+
+* Bump mkdocs-material from 9.8.0 to 9.8.1 ([#142](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/142)) ([c9ef5af](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/c9ef5af571c1ca33484c786c14086c2beca0e2bc))
+* Bump ruff from 0.17.3 to 0.17.4 ([#143](https://github.com/alrayyes/pipeline-analytics-sdk-python/issues/143)) ([f982b1d](https://github.com/alrayyes/pipeline-analytics-sdk-python/commit/f982b1d85c47c2151a8281d35bdd764fa40ed89d))
+
 ## [3.0.16](https://github.com/alrayyes/pipeline-analytics-sdk-python/compare/v3.0.15...v3.0.16) (2026-11-05)
 
 
