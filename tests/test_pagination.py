@@ -9,7 +9,7 @@ import asyncio
 import itertools
 from http import HTTPStatus
 
-import httpx
+import httpx2
 import pytest
 
 from pipeline_analytics._generated.client import Client as GeneratedClient
@@ -29,34 +29,34 @@ def _repo(n: int) -> dict[str, str]:
     }
 
 
-def _paged_handler(recorded_requests: list[httpx.Request] | None = None) -> httpx.MockTransport:
+def _paged_handler(recorded_requests: list[httpx2.Request] | None = None) -> httpx2.MockTransport:
     # Three pages (2, 1, 1 repos) so an offset bug that overwrites instead
     # of accumulates only shows up after the second page, and a captured
     # request list lets tests assert exactly which limit/offset/forge each
     # page was fetched with, not just the final identifiers.
     pages = {0: ([_repo(1), _repo(2)], True), 2: ([_repo(3)], True), 3: ([_repo(4)], False)}
 
-    def handler(request: httpx.Request) -> httpx.Response:
+    def handler(request: httpx2.Request) -> httpx2.Response:
         if recorded_requests is not None:
             recorded_requests.append(request)
         offset = int(request.url.params.get("offset", "0"))
         if offset not in pages:  # pragma: no cover - guards a test bug, not SDK behavior
             raise AssertionError(f"unexpected offset {offset}")
         repos, has_more = pages[offset]
-        return httpx.Response(200, json={"repos": repos, "hasMore": has_more}, request=request)
+        return httpx2.Response(200, json={"repos": repos, "hasMore": has_more}, request=request)
 
-    return httpx.MockTransport(handler)
+    return httpx2.MockTransport(handler)
 
 
-def _client_with(transport: httpx.MockTransport) -> GeneratedClient:
+def _client_with(transport: httpx2.MockTransport) -> GeneratedClient:
     client = GeneratedClient(base_url="https://example.test")
-    client.set_httpx_client(httpx.Client(base_url="https://example.test", transport=transport))
-    client.set_async_httpx_client(httpx.AsyncClient(base_url="https://example.test", transport=transport))
+    client.set_httpx_client(httpx2.Client(base_url="https://example.test", transport=transport))
+    client.set_async_httpx_client(httpx2.AsyncClient(base_url="https://example.test", transport=transport))
     return client
 
 
 def test_iter_repos_walks_every_page() -> None:
-    requests: list[httpx.Request] = []
+    requests: list[httpx2.Request] = []
     client = _client_with(_paged_handler(requests))
 
     # Bounded to well beyond the real 4 items: a dropped offset/limit
@@ -75,7 +75,7 @@ def test_iter_repos_walks_every_page() -> None:
 
 
 def test_iter_repos_forwards_forge_filter() -> None:
-    requests: list[httpx.Request] = []
+    requests: list[httpx2.Request] = []
     client = _client_with(_paged_handler(requests))
 
     # Only the first page matters here -- pull exactly one item rather
@@ -87,10 +87,10 @@ def test_iter_repos_forwards_forge_filter() -> None:
 
 
 def test_iter_repos_raises_api_error() -> None:
-    def handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(401, json={"code": "unauthorized", "message": "no session"}, request=request)
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(401, json={"code": "unauthorized", "message": "no session"}, request=request)
 
-    client = _client_with(httpx.MockTransport(handler))
+    client = _client_with(httpx2.MockTransport(handler))
 
     with pytest.raises(APIError) as exc_info:
         list(iter_repos(client))
@@ -104,16 +104,16 @@ def test_iter_repos_stops_on_undocumented_status() -> None:
     # listRepos' documented 200/401 responses, so the generated client
     # parses it to None -- iter_repos should stop cleanly rather than
     # raising or looping forever.
-    def handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(204, request=request)
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(204, request=request)
 
-    client = _client_with(httpx.MockTransport(handler))
+    client = _client_with(httpx2.MockTransport(handler))
 
     assert list(iter_repos(client)) == []
 
 
 def test_aiter_repos_walks_every_page() -> None:
-    requests: list[httpx.Request] = []
+    requests: list[httpx2.Request] = []
     client = _client_with(_paged_handler(requests))
 
     async def collect() -> list[str]:
@@ -135,7 +135,7 @@ def test_aiter_repos_walks_every_page() -> None:
 
 
 def test_aiter_repos_forwards_forge_filter() -> None:
-    requests: list[httpx.Request] = []
+    requests: list[httpx2.Request] = []
     client = _client_with(_paged_handler(requests))
 
     async def collect() -> None:
@@ -148,10 +148,10 @@ def test_aiter_repos_forwards_forge_filter() -> None:
 
 
 def test_aiter_repos_raises_api_error() -> None:
-    async def handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(401, json={"code": "unauthorized", "message": "no session"}, request=request)
+    async def handler(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(401, json={"code": "unauthorized", "message": "no session"}, request=request)
 
-    client = _client_with(httpx.MockTransport(handler))
+    client = _client_with(httpx2.MockTransport(handler))
 
     async def collect() -> list[object]:
         return [repo async for repo in aiter_repos(client)]
@@ -162,10 +162,10 @@ def test_aiter_repos_raises_api_error() -> None:
 
 
 def test_aiter_repos_stops_on_undocumented_status() -> None:
-    async def handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(204, request=request)
+    async def handler(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(204, request=request)
 
-    client = _client_with(httpx.MockTransport(handler))
+    client = _client_with(httpx2.MockTransport(handler))
 
     async def collect() -> list[object]:
         return [repo async for repo in aiter_repos(client)]

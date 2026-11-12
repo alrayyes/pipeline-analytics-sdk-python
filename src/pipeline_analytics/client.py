@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import os
 
-import httpx
+import httpx2
 
 from ._generated.api.meta import get_version as _get_version
 from ._generated.client import Client as _GeneratedClient
@@ -54,15 +54,15 @@ class PipelineAnalyticsClient:
         *,
         session_cookie: str | None = None,
         retry: RetryConfig = DEFAULT_RETRY_CONFIG,
-        httpx_client: httpx.Client | None = None,
-        httpx_async_client: httpx.AsyncClient | None = None,
+        httpx_client: httpx2.Client | None = None,
+        httpx_async_client: httpx2.AsyncClient | None = None,
         raise_on_unexpected_status: bool = False,
     ) -> None:
         cookie = session_cookie if session_cookie is not None else os.environ.get(SESSION_COOKIE_ENV_VAR)
         cookies = {_SESSION_COOKIE_NAME: cookie} if cookie else {}
 
         # cookies isn't passed here, and base_url is never read back off
-        # self._raw afterward either: this Client's own lazy httpx-client
+        # self._raw afterward either: this Client's own lazy httpx2-client
         # construction is never reached -- set_httpx_client/
         # set_async_httpx_client below always override it -- so the base
         # URL and cookie both have to be applied to whichever client
@@ -76,7 +76,7 @@ class PipelineAnalyticsClient:
 
         sync_client = httpx_client
         if sync_client is None:
-            sync_client = httpx.Client(base_url=base_url, transport=RetryTransport(retry=retry))
+            sync_client = httpx2.Client(base_url=base_url, transport=RetryTransport(retry=retry))
         # Apply the session cookie directly to whichever client will
         # actually send requests -- a caller-supplied httpx_client bypasses
         # the generated Client's own lazy cookie-jar construction, so the
@@ -86,7 +86,7 @@ class PipelineAnalyticsClient:
 
         async_client = httpx_async_client
         if async_client is None:
-            async_client = httpx.AsyncClient(base_url=base_url, transport=AsyncRetryTransport(retry=retry))
+            async_client = httpx2.AsyncClient(base_url=base_url, transport=AsyncRetryTransport(retry=retry))
         async_client.cookies.update(cookies)
         self._raw.set_async_httpx_client(async_client)
 
@@ -127,7 +127,7 @@ class PipelineAnalyticsClient:
         return self
 
     def __exit__(self, *exc_info: object) -> None:
-        # httpx.BaseTransport's own __exit__ ignores exc_info and just
+        # httpx2.BaseTransport's own __exit__ ignores exc_info and just
         # closes -- our RetryTransport doesn't override that -- so there's
         # nothing this needs from *exc_info beyond letting `with` call it.
         self.close()

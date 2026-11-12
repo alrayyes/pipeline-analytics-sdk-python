@@ -107,7 +107,7 @@ usage = response.parsed
 The client retries a `429` or `5xx` response with exponential backoff and
 jitter (honoring a server-sent `Retry-After`), and never retries any other
 `4xx`. Tune it by passing a `pipeline_analytics.RetryConfig` as `retry=`, or
-swap the underlying `httpx.Client`/`httpx.AsyncClient` entirely with
+swap the underlying `httpx2.Client`/`httpx2.AsyncClient` entirely with
 `httpx_client=`/`httpx_async_client=`.
 
 ## Reports

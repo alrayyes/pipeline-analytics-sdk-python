@@ -37,7 +37,7 @@ def iter_repos(
     or any ``pipeline_analytics._generated.client.Client``/
     ``AuthenticatedClient``. Raises
     :class:`~pipeline_analytics.errors.APIError` if any page's response is
-    an error, and whatever the underlying ``httpx`` transport raises on a
+    an error, and whatever the underlying ``httpx2`` transport raises on a
     transport failure that exhausts its retries.
 
     Usage::
